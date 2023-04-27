@@ -1,0 +1,111 @@
+\chapter{Number Systems}
+In the computer, the smallest units of memory is the bit, which can assume
+just 2 different states \\
+\{0, 1\} \{on, off\}, \{true, false\} , not necessary numbers.
+Larger units of memory are:
+\begin{center}
+    \begin{tabular}{ l l }
+        Byte     & 8 bits         \\
+        Kibibyte & $2^{10}$ bytes \\
+        kilobyte & $10^3$ bytes   \\
+        Mebibyte & $2^{20}$ bytes \\
+        Megabyte & $10^6$ bytes
+    \end{tabular}
+\end{center}
+
+
+\section{Integer numbers}\label{sec:integer-numbers}
+Integer numbers can easily be represented.
+The data ``standards`` are called ``data types`` and specify the size and value function.
+E.g.: 1 byte unsigned integer;
+\begin{center}
+    \begin{tabular}{ l | l }
+        memory state & value  \\
+        \hline
+        11111111     & 255    \\
+        \ldots       & \ldots \\
+        00000001     & 1      \\
+        00000000     & 0
+    \end{tabular}
+\end{center}
+
+with negative numbers \textrightarrow{} 1 byte signed integer:
+\begin{center}
+    \begin{tabular}{ l | l }
+        momory state & value  \\
+        \hline
+        01111111     & 127    \\
+        \ldots       & \ldots \\
+        00000001     & 1      \\
+        00000000     & 0      \\
+        11111111     & -1     \\
+        11111110     & -2     \\
+        11111101     & -3     \\
+        \ldots       & \ldots \\
+        10000000     & -128
+    \end{tabular}
+\end{center}
+
+
+\section{Floating point numbers (fractions)}\label{sec:floating-point-numbers-(fractions)}
+Floating-point numbers are the product of number $m \in (0,1)$ called mantissa, an integer e power of
+a base b (usually b = 2) and a sign s.
+\begin{equation*}
+    x = (-1)^s * m * b^e
+\end{equation*}
+{}
+Datatype ``single precision`` / 32-bit float
+\begin{itemize}
+    \item sign $(-1)^s$
+    \item exponent e is an integer, but it is stored differently than ``normal`` integers - binary number is shifted by 127
+
+    \begin{tabular}{l | l | l}
+        memory state & binary number & value of e \\
+        \hline
+        11111111     & 255           & 128        \\
+        11111110     & 254           & 127        \\
+        \ldots       & \ldots        & \ldots     \\
+        100000000    & 128           & 1          \\
+        01111111     & 127           & 0          \\
+        \ldots       & \ldots        & \ldots     \\
+        00000010     & 2             & -125       \\
+        00000001     & 1             & -126       \\
+        00000000     & 0             & -127
+    \end{tabular}
+
+    The values $e = 127$ and $e = 128$ are not used in the usual way.
+    Instead, they are reserved for special cases (e.g. $\pm 0$, $ \pm \infty$, signaling NaN)
+    \item mantissa is a positive binary number.
+    In order to achieve maximal precision e is chosen such that all positions of m are used (no leading zeros).
+    The point is after the first digit.
+
+    E.g.: 4-digit decimal mantissa:
+    \begin{align*}
+        310678 &\rightarrow 3.107 * 10^5 \\
+        0.00043136 &\rightarrow 4.314 * 10^{-4}
+    \end{align*}
+
+    Hence, if $x \neq 0$ there is always a non-zero digit in front of the point.
+    Since $b = 2$ this digit is a 1.
+    It is therefore not stored, but set implicitly.
+    (This is only not the case if $e=-127$)
+
+    \begin{align*}
+        m = 1 + \sum_{i = 1}^{23} m_i * 2^{-i}
+    \end{align*}
+\end{itemize}
+
+The datatype double precision (float64, double)
+*image*
+\begin{align*}
+    e \in \{ -1023, \ldots, 1023 \} \\
+    (-1023, 1024 \hbox{ reserved})
+\end{align*}
+
+\emph{Precision:} The relative precision with which a number
+can be represented is determined by the number of bits of the mantissa $m \in [1, 2 )$
+
+23 bits \textrightarrow{} $2^{23} \approx 10^7$ different states of m \textrightarrow{} relative distance of a possible number x to its ``neighbor''  is $10^{-7}$
+
+
+double precision: 52 bits \textrightarrow $2^{-52} \approx 10^{-15}$

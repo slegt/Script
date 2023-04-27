@@ -1,0 +1,113 @@
+\chapter{Number Systems}\label{ch:number-systems}
+Standard decimal number:
+\begin{align*}
+    x = 1709.3_{10} = 1 * 10^{3} + 7 * 10^2 + 0*10^1+9*10^0+3*10^{-1}
+\end{align*}
+The $10$ indicates the base $b=10$.
+Generally we can write a number as follows:
+\begin{align*}
+    x =\pm a_n*b^n+a_{n-1}*b^{n-1}+\ldots+a_0b^0+a_{-1}b^{-1}+\ldots
+\end{align*}
+Where $b \in \mathbb{N}$, $b>1$ and $a_i \in \{0,1, \dots, b-1\}$
+
+If $b \leq 10$ the usually symbols can be used.
+If $b>10$ new symbols are needed.
+E.g.: hexadecimal ($b=16$):
+
+\begin{center}
+    \begin{tabular}{ c | c| c |c| c| c| c| c| c| c| c| c| c| c| c}
+        1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 \\
+        \hline
+        1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & A  & B  & C  & D  & E  & F  \\
+    \end{tabular}
+\end{center}
+
+
+\section{Switching between different systems}\label{sec:switching-between-different-systems}
+$1709_{10}$ in base $8$:
+\begin{tabular}{ c c c c c }
+    $8^0 = 1$ & $8^1 = 8$ & $8^2=64$ & $8^3=512$ & $8^4=4096$
+\end{tabular}
+\begin{align*}
+    1709_{10} &= 3 * 512_{10} + 2 * 64_{10} + 5 * 8_{10} + 5_{10}\\
+    &=3 * 8^3+2*8^2+5*8^1+5*8^0\\
+    &=3255_8
+\end{align*}
+\emph{alternatively:} calculate in the new system:
+\begin{flalign*}
+    &10_{10} = 12_8\\
+    &1709_{10} = 1 * {12_8}^3+7*{12_8}^2+0*{12_8}^1+9*{12_8}^0
+\end{flalign*}
+\emph{better alternative:} division with remainder:
+\begin{align*}
+    1709_{10}=3255_8=((3*8+2)*8+5)*8+5
+\end{align*}
+generally
+\begin{align*}
+    x = (\ldots (((a_nb+a_{n-1})b+a_{n-2})b+\ldots+a_1)b+a_0
+\end{align*}
+$a_0$ is remainder from division $x/b$
+generally $a_i$ is the remainder from
+\begin{align*}
+    (\ldots((x-a_0)/b-a_1)/b\ldots-a_{i-1})/b
+\end{align*}
+\begin{alignat*}{2}
+    1709:8 &= 213&|5\\
+    213:8 &= 26     &|5\\
+    26:8 &= 3       &|2\\
+    3:8 &= 0       &|3\\
+    1709_{10} &= 3255_8
+\end{alignat*}
+
+
+\section{Transformation of fractions}\label{sec:transformation-of-fractions}
+Fraction $0.3_{10} = 3/10_{10}$
+\begin{align*}
+    3:12_8 = 0.2\overline{3146}_8\\
+\end{align*}
+\emph{better alternative:} repeated multiplication ($0 \leq x < 1$)
+\begin{align*}
+    x = (a_{-1}+(a_{-2}+(a_{-3}+\ldots)/b)/b)/b
+\end{align*}
+for example: $a_{-1}$ is position in front of the dot in $x*8$
+\begin{flalign*}
+    &0.3 * 8 = 2.4 \rightarrow 2\\
+    &0.4 * 8 = 3.2 \rightarrow 3\\
+    &0.2 * 8 = 1.6 \rightarrow 1\\
+    &0.6 * 8 = 4.8 \rightarrow 4 \\
+    &0.8 * 8 = 6.4 \rightarrow 6\\
+    &0.4 * 8 = 3.2 \rightarrow 3 \\
+    &\dots\\
+    &0.3_{10}=0.2 \overline{3146}_8
+\end{flalign*}
+
+
+\section{Special Systems}\label{sec:special-systems}
+The transformation becomes particularly simple if the base of one system is power or root of the other base. E.g.: $b = 2 = \sqrt[3]{8}$ from octal to binary
+\begin{flalign*}
+    1709_{10}   = &3*8^3+2*8^2+5*8^1+5\\
+    = &3*2^9+2*2^6+5*2^3+5\\
+    = &(0*2^2+1*2^1+^*2^0)*2^9+(0*2^2+1*2^1+0*2^0)*2^6\\
+    &+(1*2^2+0*2^1+1*2^0)*2^3+(1*2^2+0*2^1+1*2^0)*2^0\\
+    = &011010101101_2
+\end{flalign*}
+
+\begin{flalign*}
+    &3_8 = 011_2\\
+    &2_8 = 010_2\\
+    &5_8 = 101_2
+\end{flalign*}
+
+From binary to hexadecimal:
+
+\begin{flalign*}
+    011010101101_2 &= 6AD_{16}\\
+    0110_2 &= 6_{16}\\
+    1010_2 = 10_{10} &= A_{16}\\
+    1101_2 = 13_{10} &= D_{16}
+\end{flalign*}
+
+
+
+
+
