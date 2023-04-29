@@ -33,13 +33,15 @@ No we could use $y_n = \frac{1}{n}- 10 * y_{n-1}$ to obtain $y_1, \ldots{},  y_{
         \bottomrule
     \end{tabular}
 \end{center}
-If we use $y_n = \frac{1}{n}- 10 * y_{n-1}$, the initial error of $y_0$ grows like $10^n$ and since $y_n< y_{n+1}$, the error soon dominates. This is unstable behaviour.
+If we use $y_n = \frac{1}{n}- 10 * y_{n-1}$, the initial error of $y_0$ grows like $10^n$ and since $y_n< y_{n+1}$, the error soon dominates.
+This is unstable behaviour.
 
 If we use
 \begin{equation*}
     y_n = \frac{1}{10}*\left( \frac{1}{n+1}-y_{n+1} \right)
 \end{equation*}
-and start with the crude approximation $y_{30}=0$, the large error of $y_{30}$ is reduced by a factor of 10 with each iteration. This is a stable algorithm.
+and start with the crude approximation $y_{30}=0$, the large error of $y_{30}$ is reduced by a factor of 10 with each iteration.
+This is a stable algorithm.
 \begin{center}
     \begin{tabular}{r l}
         \toprule
@@ -57,7 +59,8 @@ and start with the crude approximation $y_{30}=0$, the large error of $y_{30}$ i
     \end{tabular}
 \end{center}
 
-A numerical algorithm is called stable, if the provided solution to a problem P is the exact solution to a Problem Q that can be derived from P by a slight variation of the input data. Else it is called unstable.
+A numerical algorithm is called stable, if the provided solution to a problem P is the exact solution to a Problem Q that can be derived from P by a slight variation of the input data.
+Else it is called unstable.
 
 
 \section{Fixed-point iteration and fixed-point theorem}\label{sec:fixed-point-iteration-and-fixed-point-theorem}
@@ -94,9 +97,11 @@ Consider the difference
 \end{equation*}
 
 \emph{Definition:} Let $I=[a,b] \subset \mathbb{R}$ be an interval and $\Phi: I \to \mathbb{R}$ is a contraction on I if there is a $0 \leq \theta < 1$
-such that $|\Phi(x)-\Phi(y)| \leq \theta |x-y|$. Remark: $\theta$ is called Lipschitz constant $\to$ Lipschitz continuity if $0 \leq \theta < \infty$
+such that $|\Phi(x)-\Phi(y)| \leq \theta |x-y|$.
 
-\vspace{5mm}
+Remark: $\theta$ is called Lipschitz constant $\to$ Lipschitz continuity if $0 \leq \theta < \infty$
+
+\vspace{10mm}
 
 \emph{Lemma:} If $\Phi: I \to  \mathbb{R}$ is continuously differentiable on I ($\theta \in C^1(I)$) then
 \begin{equation*}
@@ -105,7 +110,7 @@ such that $|\Phi(x)-\Phi(y)| \leq \theta |x-y|$. Remark: $\theta$ is called Lips
 Proof: mean value theorem: For all $x,y \in I$, $x<y$ there is a $\xi \in [a,b]$ such that\\
 $\Phi(x)-\Phi(y) = \Phi'(\xi)(x-y)$
 
-\vspace{5mm}
+\vspace{10mm}
 
 \emph{Fixed-point theorem:} Let $I=[a,b] \subset \mathbb{R}$ be an interval and $\Phi: I \to I$ a contraction with Lipschitz constant $0 < \theta < 1$
 Then:
@@ -137,7 +142,8 @@ Therefore, $x_i$ is a Cauchy sequence which implies convergence. $\hat{x} = \lim
     &  \leq |\hat{x}-x_i|+ \theta * |\hat{x}-x_i|\\
     &\to 0  \hbox{ for } i \to \infty
 \end{align*}
-Show that there is only one fixed-point by assuming the opposite. If $\hat{x}$ and $\hat{y}$ are distinct fixed-points, then
+Show that there is only one fixed-point by assuming the opposite.
+If $\hat{x}$ and $\hat{y}$ are distinct fixed-points, then
 \begin{equation*}
     0 \leq |\hat{x}-\hat{y}| = |\Phi(\hat{x})-\Phi(\hat{y})| \leq \theta * |\hat{x}-\hat{y}|
 \end{equation*}
@@ -172,7 +178,7 @@ First order taylor expansion at current position x:
 \end{align*}
 This is a fixed-point equation with the iteration function $\Phi(x)= x - \dfrac{f(x)}{f'(x)}$
 
-\vspace{5mm}
+\vspace{10mm}
 
 \emph{Example:} Calculation of the squareroot of C\@.
 \begin{equation*}
@@ -188,7 +194,7 @@ and $\sqrt{2}$ (for odd e) be calculated once and stored
     f(x) = x^2-m &= 0 \\
     f'(x) &= 2x \neq 0
 \end{align*}
-Where $m\in[1,2)$ and $x \in [1, \sqrt{2}]$
+Where $m\in[1,2)$ and $x \in \left[1, \sqrt{2}\right]$
 
 \begin{align*}
     \Phi(x)&=x- \frac{f(x)}{f'(x)}= x- \frac{x^2-m}{2x}= \frac{x}{2}+ \frac{m}{2x} = \frac{1}{2} \left( x+ \frac{m}{x} \right)\\
@@ -199,7 +205,7 @@ E.g: $m=1.96$
 \begin{center}
     \begin{tabular}{r l l}
         \toprule
-        i & x_i              & \# correct digits \\
+        i & $x_i$              & \# correct digits \\
         \midrule
         0 & 1                & $\leq 1$          \\
         1 & 1.48             & $=1$              \\

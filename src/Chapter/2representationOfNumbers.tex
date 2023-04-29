@@ -1,4 +1,4 @@
-\chapter{Number Systems}
+\chapter{Number Systems}\label{ch:number-systems2}
 In the computer, the smallest units of memory is the bit, which can assume
 just 2 different states \\
 \{0, 1\} \{on, off\}, \{true, false\} , not necessary numbers.
@@ -23,21 +23,24 @@ Integer numbers can easily be represented.
 The data ``standards`` are called ``data types`` and specify the size and value function.
 E.g.: 1 byte unsigned integer;
 \begin{center}
-    \begin{tabular}{ l | l }
+    \begin{tabular}{ l l }
+        \toprule
         memory state & value  \\
-        \hline
+        \midrule
         11111111     & 255    \\
         \ldots       & \ldots \\
         00000001     & 1      \\
-        00000000     & 0
+        00000000     & 0      \\
+        \bottomrule
     \end{tabular}
 \end{center}
 
 with negative numbers \textrightarrow{} 1 byte signed integer:
 \begin{center}
-    \begin{tabular}{ l | l }
-        momory state & value  \\
-        \hline
+    \begin{tabular}{ l l }
+        \toprule
+        memory state & value  \\
+        \midrule
         01111111     & 127    \\
         \ldots       & \ldots \\
         00000001     & 1      \\
@@ -46,7 +49,8 @@ with negative numbers \textrightarrow{} 1 byte signed integer:
         11111110     & -2     \\
         11111101     & -3     \\
         \ldots       & \ldots \\
-        10000000     & -128
+        10000000     & -128   \\
+        \bottomrule
     \end{tabular}
 \end{center}
 
@@ -59,13 +63,21 @@ a base b (usually b = 2) and a sign s.
 \end{equation*}
 {}
 Datatype ``single precision`` / 32-bit float
+\begin{center}
+    \begin{tabular}{|l r| l @{\hspace{1cm}} r| l@{\hspace{2cm}} r|}
+        \hline
+        s & 1 bit & e & 8 bits & m & 23 bits\\
+        \hline
+    \end{tabular}
+\end{center}
 \begin{itemize}
     \item sign $(-1)^s$
     \item exponent e is an integer, but it is stored differently than ``normal`` integers - binary number is shifted by 127
 
-    \begin{tabular}{l | l | l}
+    \begin{tabular}{l l l}
+        \toprule
         memory state & binary number & value of e \\
-        \hline
+        \midrule
         11111111     & 255           & 128        \\
         11111110     & 254           & 127        \\
         \ldots       & \ldots        & \ldots     \\
@@ -74,7 +86,8 @@ Datatype ``single precision`` / 32-bit float
         \ldots       & \ldots        & \ldots     \\
         00000010     & 2             & -125       \\
         00000001     & 1             & -126       \\
-        00000000     & 0             & -127
+        00000000     & 0             & -127       \\
+        \bottomrule
     \end{tabular}
 
     The values $e = 127$ and $e = 128$ are not used in the usual way.
@@ -100,16 +113,19 @@ Datatype ``single precision`` / 32-bit float
 \end{itemize}
 
 The datatype double precision (float64, double)
-*image*
+\begin{center}
+    \begin{tabular}{|l r| l @{\hspace{1cm}} r| l@{\hspace{2cm}} r|}
+        \hline
+        s & 1 bit & e & 11 bits & m & 52 bits\\
+        \hline
+    \end{tabular}
+\end{center}
 \begin{align*}
     e \in \{ -1023, \ldots, 1023 \} \\
-    (-1023, 1024 \hbox{ reserved})
+    (-1022, 1024 \hbox{ reserved})
 \end{align*}
 
 \emph{Precision:} The relative precision with which a number
-can be represented is determined by the number of bits of the mantissa $m \in [1, 2 )$
-
-23 bits \textrightarrow{} $2^{23} \approx 10^7$ different states of m \textrightarrow{} relative distance of a possible number x to its ``neighbor'' is $10^{-7}$
-
-
+can be represented is determined by the number of bits of the mantissa $m \in [1, 2 )$.
+23 bits \textrightarrow{} $2^{23} \approx 10^7$ different states of m \textrightarrow{} relative distance of a possible number x to its ``neighbor'' is $10^{-7}$.
 double precision: 52 bits \textrightarrow $2^{-52} \approx 10^{-15}$
