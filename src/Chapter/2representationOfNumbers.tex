@@ -4,12 +4,16 @@ just 2 different states \\
 \{0, 1\} \{on, off\}, \{true, false\} , not necessary numbers.
 Larger units of memory are:
 \begin{center}
-    \begin{tabular}{ l l }
-        Byte     & 8 bits         \\
-        Kibibyte & $2^{10}$ bytes \\
-        kilobyte & $10^3$ bytes   \\
-        Mebibyte & $2^{20}$ bytes \\
-        Megabyte & $10^6$ bytes
+    \begin{tabular}{ l l @{ }l}
+        \toprule
+        name & \multicolumn{2}{l}{value} \\
+        \midrule
+        Byte     & 8        & bits  \\
+        Kibibyte & $2^{10}$ & bytes \\
+        kilobyte & $10^3$   & bytes \\
+        Mebibyte & $2^{20}$ & bytes \\
+        Megabyte & $10^6$   & bytes \\
+        \bottomrule
     \end{tabular}
 \end{center}
 
@@ -105,7 +109,7 @@ The datatype double precision (float64, double)
 \emph{Precision:} The relative precision with which a number
 can be represented is determined by the number of bits of the mantissa $m \in [1, 2 )$
 
-23 bits \textrightarrow{} $2^{23} \approx 10^7$ different states of m \textrightarrow{} relative distance of a possible number x to its ``neighbor''  is $10^{-7}$
+23 bits \textrightarrow{} $2^{23} \approx 10^7$ different states of m \textrightarrow{} relative distance of a possible number x to its ``neighbor'' is $10^{-7}$
 
 
 double precision: 52 bits \textrightarrow $2^{-52} \approx 10^{-15}$

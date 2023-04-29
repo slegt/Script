@@ -1,0 +1,213 @@
+\chapter{Stability and fixed-point theorem}\label{ch:stability-and-fixed-point-theorem}
+
+
+\section{Stability}\label{sec:stability}
+Consider
+\begin{equation*}
+    \int_0^1 \frac{x^{10} }{x+10} dx
+\end{equation*}
+This integral can be solved iteratively:
+\begin{align*}
+    y_n &= \int_0^1 \frac{x^n}{x+10} dx \\
+    y_0 &= \int_0^1 \frac{1}{x+10} dx = \left[ \ln(x+10) \right]^1_0 = \ln\left( \frac{11}{10} \right) \approx 0.095310\\
+    y_n + 10 * y_{n-1} &= \int_0^1 \frac{x^n+10*x^{n-1}}{x+10} dx = \int_0^1 x^{n-1} dx = \frac{1}{n}
+\end{align*}
+No we could use $y_n = \frac{1}{n}- 10 * y_{n-1}$ to obtain $y_1, \ldots{},  y_{10}$:
+\begin{center}
+    \begin{tabular}{r l}
+        \toprule
+        n  & $y_n$           \\
+        \midrule
+        0  & 0.0953102       \\
+        1  & 0.0468982       \\
+        2  & 0.0310181       \\
+        3  & 0.0231520       \\
+        4  & 0.0184804       \\
+        5  & 0.0151955       \\
+        6  & 0.0147117       \\
+        7  & -0.00425944     \\
+        8  & 0.167594        \\
+        9  & -1.56483 \ldots \\
+        10 & 15\ldots        \\
+        11 & -157\ldots      \\
+        \bottomrule
+    \end{tabular}
+\end{center}
+If we use $y_n = \frac{1}{n}- 10 * y_{n-1}$, the initial error of $y_0$ grows like $10^n$ and since $y_n< y_{n+1}$, the error soon dominates. This is unstable behaviour.
+
+If we use
+\begin{equation*}
+    y_n = \frac{1}{10}*\left( \frac{1}{n+1}-y_{n+1} \right)
+\end{equation*}
+and start with the crude approximation $y_{30}=0$, the large error of $y_{30}$ is reduced by a factor of 10 with each iteration. This is a stable algorithm.
+\begin{center}
+    \begin{tabular}{r l}
+        \toprule
+        n  & $y_n$      \\
+        \midrule
+        30 & 0          \\
+        29 & 0.00333    \\
+        28 & 0.00311    \\
+        27 & 0.00324    \\
+        \ldots \\
+        20 & 0.00434704 \\
+        \ldots \\
+        0  & 0.0953102  \\
+        \bottomrule
+    \end{tabular}
+\end{center}
+
+A numerical algorithm is called stable, if the provided solution to a problem P is the exact solution to a Problem Q that can be derived from P by a slight variation of the input data. Else it is called unstable.
+
+
+\section{Fixed-point iteration and fixed-point theorem}\label{sec:fixed-point-iteration-and-fixed-point-theorem}
+We search the root of $f(x) = 2x-\tan(x)$. $2x-\tan(x) = 0$ can be transformed into a fixpoint equation:
+\begin{align*}
+    &x = \Phi_1(x) = \frac{1}{2} \tan(x) \\
+    &x = \Phi_2(x) = \arctan(2x)
+\end{align*}
+With $\hat{x} = \Phi(\hat{x})$
+The idea of the fixed-point iteration is to create a sequence by repeated insertion in $\Phi$
+\begin{equation*}
+    x_{i+1} = \Phi(x_i)
+\end{equation*}
+which converges against $\hat{x}$
+
+\begin{center}
+    \begin{tabular}{r l l }
+        \toprule
+        $i$ & $x_{i+1}=\frac{1}{2}\tan(x)$ & $x_{i+1}=\arctan(2x_i)$ \\
+        \midrule
+        0   & 1.2                          & 1.2                     \\
+        1   & 1.2861                       & 1.1760                  \\
+        2   & 1.7084                       & 1.1688                  \\
+        3   & -3.6108                      & 1.1666                  \\
+        4   & {}!                          & 1.1659                  \\
+        5   &                              & 1.1657                  \\
+        6   &                              & 1.1656                  \\
+        \bottomrule
+    \end{tabular}
+\end{center}
+Consider the difference
+\begin{equation*}
+    |x_{i+1}-x_i| = |\Phi(x_1)-\Phi(x_{i-1})|
+\end{equation*}
+
+\emph{Definition:} Let $I=[a,b] \subset \mathbb{R}$ be an interval and $\Phi: I \to \mathbb{R}$ is a contraction on I if there is a $0 \leq \theta < 1$
+such that $|\Phi(x)-\Phi(y)| \leq \theta |x-y|$. Remark: $\theta$ is called Lipschitz constant $\to$ Lipschitz continuity if $0 \leq \theta < \infty$
+
+\vspace{5mm}
+
+\emph{Lemma:} If $\Phi: I \to  \mathbb{R}$ is continuously differentiable on I ($\theta \in C^1(I)$) then
+\begin{equation*}
+    \sup_{\substack{x,y \in I}} \frac{|\Phi(x)-\Phi(y)|}{|x-y|} = \sup_{\substack{z \in I}} \Phi'(x)
+\end{equation*}
+Proof: mean value theorem: For all $x,y \in I$, $x<y$ there is a $\xi \in [a,b]$ such that\\
+$\Phi(x)-\Phi(y) = \Phi'(\xi)(x-y)$
+
+\vspace{5mm}
+
+\emph{Fixed-point theorem:} Let $I=[a,b] \subset \mathbb{R}$ be an interval and $\Phi: I \to I$ a contraction with Lipschitz constant $0 < \theta < 1$
+Then:
+\begin{enumerate}[label=(\roman*)]
+    \item there is exactly one fixed-point $\hat{x}$ of $\Phi$, such that $\Phi(\hat{x}) = \hat{x}$
+    \item For any initial value $x_0 \in I$ the fixed-point iteration $x_{i+1} = \Phi(x_i)$ converges against $\hat{x}$ with
+    \begin{align*}
+        |x_{i+1}-x_i| &\leq \theta *|x_i-x_{i+1}|\hbox{ and}\\
+        |\hat{x}-x_i| &\leq \frac{\theta^i}{1- \theta} * |x_1-x_0|
+    \end{align*}
+\end{enumerate}
+Proof: For all $x_0 \in I$
+\begin{align*}
+    |x_{i+1}-x_i|=|\Phi(x_{i+1})-\Phi(x_i)| &\leq  \theta * |x_i-x_{i-1}| \mbox{ therefore}\\
+    |x_{i+1}-x_i| &\leq \theta^i*|x_1-x_0|
+\end{align*}
+Now we show that $x_i$ is a Cauchy sequence:
+\begin{align*}
+    |x_{i+k}-x_i| &\leq |x_{i+k}-x_{i+k-1}|+|x_{i+k-1}-x_{i+k-2}|+\ldots + |x_{i+1}-x_i|\\
+    &\leq (\theta^{i+k-1}+\theta^{i+k-2}+\ldots+\theta^i)* |x_1-x_0|\\
+    &= \theta^i*(\theta^{k-1}+\theta^{k-2}+\ldots+\theta^{0})*|x_1-x_0| \\
+    &\leq \frac{\theta^i}{1-\theta}* |x_1-x_0|
+\end{align*}
+Therefore, $x_i$ is a Cauchy sequence which implies convergence. $\hat{x} = \lim_{\substack{i \to \infty}}x_i$ is also a fixpoint of $\Phi$, since:
+\begin{align*}
+    |\hat{x} - \Phi(\hat{x})|&=|\hat{x}-x_{i+1}+x_{i+1}-\Phi(\hat{x})|\\
+    & = |\hat{x}-x_{i+1}+\Phi(x_i)-\Phi(\hat{x})|\\
+    & \leq |\hat{x}-x_{i+1}| + |\Phi(x_i)-\Phi(\hat{x})|\\
+    &  \leq |\hat{x}-x_i|+ \theta * |\hat{x}-x_i|\\
+    &\to 0  \hbox{ for } i \to \infty
+\end{align*}
+Show that there is only one fixed-point by assuming the opposite. If $\hat{x}$ and $\hat{y}$ are distinct fixed-points, then
+\begin{equation*}
+    0 \leq |\hat{x}-\hat{y}| = |\Phi(\hat{x})-\Phi(\hat{y})| \leq \theta * |\hat{x}-\hat{y}|
+\end{equation*}
+but $\theta < 1$, therefore this is only possible if $|\hat{x}- \hat{y}| = 0 \implies \hat{x} = \hat{y}$
+
+
+\section{Rate of convergence}\label{sec:rate-of-convergence}
+A sequence $x_i \in \mathbb{R}$ converges with order (at least) $P \leq 1$ against $\hat{x}$ if there is a constant $C>0$ such that
+\begin{equation*}
+    |x_{i+1}-\hat{x}| \leq C * |x_i-\hat{x}|^P
+\end{equation*}
+where if $P=1$ it is additionally required that $C>1$.
+If $P=1$ we speak of linear convergence, if $P=2$ of quadratic convergence.
+
+Alternatively the rate of convergence can also be defined through the inequalities of differences of adjacent elements of the sequence.
+\begin{equation*}
+    |x_{i+1}-x_i| \leq C * |x_i-x_{i-1}|^P
+\end{equation*}
+In general, the fixed-point iteration converges only linearly due to
+\begin{equation*}
+    |x_{i+1}-\hat{x}| \leq \theta * |x_i-\hat{x}|
+\end{equation*}
+
+
+\section{Newtons method (for root finding)}\label{sec:newtons-method-(for-root-finding)}
+We are searching the root $\hat{x}$ of f, but now we also have access to the first order derivative $f'(x)$.
+First order taylor expansion at current position x:
+\begin{align*}
+    f(x) &\approx f(x_i)+ f'(x_i)(x-x_i)\\
+    f(\hat{x}) &= 0\\
+    x_{i+1} &= x_i - \frac{f(x_i)}{f'(x_i)}
+\end{align*}
+This is a fixed-point equation with the iteration function $\Phi(x)= x - \dfrac{f(x)}{f'(x)}$
+
+\vspace{5mm}
+
+\emph{Example:} Calculation of the squareroot of C\@.
+\begin{equation*}
+    f(x)=x^2-C
+\end{equation*}
+In floating point calculation the exponent of C should be treated separately:
+\begin{equation*}
+    \sqrt {C} = \sqrt {m * 2^e} = \sqrt {m} * 2^{\frac{e}{2}}
+\end{equation*}
+and $\sqrt{2}$ (for odd e) be calculated once and stored
+\begin{align*}
+    \sqrt {m} &= ? \\
+    f(x) = x^2-m &= 0 \\
+    f'(x) &= 2x \neq 0
+\end{align*}
+Where $m\in[1,2)$ and $x \in [1, \sqrt{2}]$
+
+\begin{align*}
+    \Phi(x)&=x- \frac{f(x)}{f'(x)}= x- \frac{x^2-m}{2x}= \frac{x}{2}+ \frac{m}{2x} = \frac{1}{2} \left( x+ \frac{m}{x} \right)\\
+    x_{i+1} &= \frac{1}{2}*\left(x_i+\frac{m}{x_i} \right)
+\end{align*}
+
+E.g: $m=1.96$
+\begin{center}
+    \begin{tabular}{r l l}
+        \toprule
+        i & x_i              & \# correct digits \\
+        \midrule
+        0 & 1                & $\leq 1$          \\
+        1 & 1.48             & $=1$              \\
+        2 & 1.420216         & $=3$              \\
+        3 & 1.40000167       & $=6$              \\
+        4 & 1.40000000000099 & $=12$             \\
+        5 & 1.4              & $=15$             \\
+        \bottomrule
+    \end{tabular}
+\end{center}
+(number of correct digits approximately doubles every iteration $\to$ quadratic convervenge)
