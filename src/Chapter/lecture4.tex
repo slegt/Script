@@ -1,0 +1,194 @@
+\section{Rate of convergence for Newton's method}\label{sec:rate-of-convergence-for-newton's-method}
+\begin{align*}
+    f(\hat{x}) &= f(x_i) + f'(x_i)(\hat{x}-x_i)+\frac{1}{2}f(x_i)*(\hat{x}-x_i)^2+\ldots\\
+    &=f(x_i)+f'(x_i)(\hat{x}-x_i)+\frac{1}{2}f(\xi)(\hat{x}-x_i)^2 \text{ for }\xi \in [\hat{x}, x_i]\\
+    \hat{x}-x_i+\frac{f(x_i)}{f'(x_i)} &= \frac{1}{2} \frac{f''(\xi)}{f'(x_i)}(\hat{x}-x_i)^2\\
+    x_{i+1}&=x_i-\frac{f(x_i)}{f'(x_i)}\\
+    \hat{x}-x_{i+1}&=\frac{f''(\xi)}{2f'(x)}(\hat{x}-x_i)^2
+\end{align*}
+Hence if $f'$ is limited and if $\lvert f'(x) \rvert>\epsilon >0$ on an interval that contains the root,
+we can expect quadratic convergence:
+\begin{equation*}
+    \lvert \hat{x}-x_{i+1} \rvert \leq M * \lvert \hat{x}-x_i \rvert^2
+\end{equation*}
+
+
+\section{Halley's method}\label{sec:halleys-method}
+If the second derivative $f''(x)$ can be evaluated easily, then Halley's method can be useful.
+Consider:
+\begin{align*}
+    g(x)&= \frac{f(x)}{\sqrt {\lvert f'(x) \rvert}}\\
+    \lvert f'(x) \rvert &= \text{sign}(f'(x))*f'(x)\\
+\end{align*}
+Roots of f are roots of g and vice versa if $\lvert f'(x) \rvert < \infty$.
+Now calculate the derivative of $g(x)$
+\begin{align*}
+    g'(x) &= \frac{f'(x) \sqrt{\lvert f'(x) \rvert}-f(x)*\frac{f''(x)}{2*\sqrt{\lvert f'(x) \rvert}}*\text{sign}(f'(x))}
+    {\lvert f'(x) \rvert}\\
+    &=\frac{f'(x)* \lvert f'(x) \rvert - \frac{1}{2} f(x)f''(x)*\text{sign}(f'(x))}{\lvert f'(x) \rvert * \sqrt {\lvert f'(x) \rvert}}\\
+    &=\frac{f'(x)^2- \frac{1}{2}f(x)f''(x)}{f'(x)*\sqrt{\lvert f'(x) \rvert}}
+\end{align*}
+Apply Newtons method to $g(x)$
+\begin{align*}
+    x_{i+1} &= x_{i}- \frac{g(x_i)}{g'(x_i)}\\
+    &=x_i-\cfrac{f(x_i)}{f'(x_i)-\cfrac{f(x_i)*f''(x_i)}{2*f'(x_i)}}=\cfrac{f(x_i)}{f'(x_i)*\left(1-\cfrac{f(x_i)*f''(x_i)}{2*f'(x_i)^2}\right)}
+\end{align*}
+This term can be considered to be a correction to Newtons method.
+(Without calculation) Halley's method has cubic convergence.
+
+
+\chapter{(Compolex) Roots of polynomials}\label{ch:(compolex)-roots-of-polynomials}
+A Polynomial $P_n = a_n x^n+a_{n-1}x^{n-1}+\ldots+a_1 x+a_0$
+should be evaluated according to
+\begin{equation*}
+    P_n = ((\ldots((a_n x+a_{n-1})x+a_{n-2})x+\ldots)x+a_1)x+a_0
+\end{equation*}
+which has better stability and requires fewer operations.
+
+
+\section{Fundamental theorem of algebra}\label{sec:fundamental-theorem-of-algebra}
+Let $P(z)=\sum_{k=0}^n a_k*z^k$ be a non-constant polynomial of order $n \geq 1$
+and complex coefficients $a_k \in \mathbb{C}$.
+Then $P$ has at least one root $\hat{z}$ with $P(\hat{z})=0$
+If roots are counted according to their multiplicity, $P$ has $n$ roots.
+If the roots $\hat{z_i}$ are known the polynomial can be written as
+\begin{equation*}
+    P(z)=a_n(z-z_1)(z-z_2)\ldots(z-z_n)
+\end{equation*}
+$z_i = z_j$ for $i \neq j$ is possible \textrightarrow{} two fold root in the representation of $P$.
+\begin{equation*}
+    P(z) = a_n(z-z_1)^{m_1}(z-z_2)^{m_2}\ldots (z-z_n)^{m_n}
+\end{equation*}
+Where the roots $z_i$ are pairwise distinct.
+$m_i \in \mathbb{N}$ is called the multiplicity of the root $z_i$.
+\begin{equation*}
+    \sum_{i=1}^{k}m_i = n
+\end{equation*}
+
+
+\section{Müllers method}\label{sec:mullers-method}
+Approximates the function by a parabolic (also works for non-polynomial functions)
+If 3 initial values $x_1, x_2, x_3$ are given.
+Then:
+\begin{equation*}
+    P(x)=a(x-x_3)^2+b(x-x_3)+c
+\end{equation*}
+\begin{align*}
+    y_i &= f(x_i)\\
+    y_1 &= a(x_1-x_3)^2+b(x_1-x_3)+c\\
+    y_2 &=a(x_2-x_3)^2+b(x_2-x_3)+c\\
+    y_3 &=c
+\end{align*}
+Task: Get the $a,b,c$ find root of $\tilde{p}=a\tilde{x}^2+b\tilde{x}+c$ and iterate again with
+$x_4 = \hat{\tilde{x}}+x_3$
+
+First we eliminate the parameter b to calculate a:
+\begin{align*}
+    \frac{y_1-c}{x_1-x_3}&=a(x_1-x_3)+b\\
+    \frac{y_2-c}{x_2-x_3}&=a(x_2-x_3)+b\\
+    \\
+    a(x_1-x_2)&=\frac{y_1-c}{x_1-x_3}-\frac{x_2-c}{x_2-x_3}\\
+    a&=\frac{(y_1-y_3)(x_2-x_3)-(y_2-y_3)(x_1-x_3)}{(x_1-x_3)(x_2-x_3)(x_1-x_2)}
+\end{align*}
+Now we can calculate the parameter b:
+\begin{align*}
+    b &= \frac{y_1-y_3}{x_1-x_3}-\frac{(y_1-y_3)(x_2-x_3)-(y_2-y_3)(x_1-x_3)}
+    {(x_1-x_3)(x_2-x_3)(x_1-x_2)}*(x_1-x_3)\\
+    &=\frac{(x_1-x_3)^2(y_2-y_3)-(x_2-x_3)^2(y_1-y_3)}{(x_1-x_3)(x_2-x_3)(x_1-x_2)}
+\end{align*}
+Now we calculate the root of $\tilde{p}$
+\begin{equation*}
+    x_4-x_3=\frac{-b \pm \sqrt{b^2-4ac}}{2a}
+\end{equation*}
+We select the solution that leads to the smaller $\lvert x_4- x_3 \rvert$ (The next estimate should be close to the current one).
+Hence, the difference in the numerator and potential rounding issues.
+Solution:
+\begin{align*}
+    x_4-x_3 = \hat{\tilde{x}} &= \cfrac{(-b \pm \sqrt {b²-4ac})*(-b \mp \sqrt{4ac})}{2a*(-b \mp \sqrt {b^2-4ac})}\\
+    &=\frac{b^2-(b^2-4ac)}{2a*(-b \mp \sqrt{b^2-4ac})}\\
+    &=\frac{-2c}{b \pm \sqrt {b^2-4ac}}\\
+    \text{Remember, we want} &\text{ to make $\lvert x_4-x_3 \rvert$ small}\\
+    x_4-x_3&= \frac{-2c}{b+\text{sign}(b)\sqrt {b^2-4ac}}
+\end{align*}
+\begin{equation*}
+    \begin{bmatrix}
+        x_1 &x_2 &x_3\\
+    \end{bmatrix}
+    \to
+    \begin{bmatrix*}
+        y_1=f(x_1)\\
+        y_2=f(x_2)\\
+        y_3=f(x_3)
+    \end{bmatrix*}
+    \to
+    \begin{bmatrix*}
+        a &b &c
+    \end{bmatrix*}
+    \to
+    \begin{bmatrix*}
+        x_4
+    \end{bmatrix*}
+    \to
+    \begin{bmatrix*}
+        x_2 &x_3 &x_4
+    \end{bmatrix*}
+\end{equation*}
+
+\section{Laguerre's Method}\label{sec:laguerres-method}
+\begin{align*}
+    p_n(x) = a_n(x-\xi_1)(x-\xi_2)\ldots(x-\xi_n)
+\end{align*}
+with unknown roots $\xi_i$
+\begin{align*}
+    p_n(\xi_i) &= 0\\
+    \ln \lvert p_n(x) \rvert &= \ln(a_n) + \ln \lvert x- \xi_1 \rvert + \ln \lvert x- \xi_2 \rvert
+    +\ldots + \ln \lvert x- \xi_n \rvert\\
+    \frac{d}{dx} \left( \ln \lvert p_n(x)\rvert \right) = \frac{P_n'(x)}{p_n(x)}
+    &= \frac{1}{x-\xi_1}+\frac{1}{x-\xi_2}+ \ldots + \frac{1}{x-\xi_n} \coloneqq \mathcal{G}(x)\\
+    -\frac{d^2}{dx^2}(\ln \lvert p_n(x) \rvert)= \left( \frac{p_n''(x)}{p_n(x)}\right)^2-\frac{p_n''(x)}{p_n(x)}
+    &= \frac{1}{(x-\xi_1)^2}+\frac{1}{(x-\xi_2)^2}+\ldots+\frac{1}{(x-\xi_n)^2} \coloneqq \mathcal{H}(x)
+\end{align*}
+$\mathcal{G}(x)$ and $\mathcal{H}(x)$ can be calculated since $p_n, p_n', p_n''$ are available.
+Assumptions:
+\begin{itemize}
+    \item root closest to current estimate $x_i$ is $\xi_1$.
+    Define as a distance $a=x_i-\xi_k$
+    \item all other roots $\xi_2, \ldots, \xi_n$ have the same distance to $x_i$. $b=x_i-\xi_k$ for $k>1$
+\end{itemize}
+Now we can find an approximation for $\mathcal{G}, \mathcal{H}$:
+\begin{align*}
+    \mathcal{G}&= \frac{1}{a}+ \frac{n-1}{b}\\
+    \mathcal{H}&= \frac{1}{a^2}+\frac{n-1}{b^2}\\
+    b &= \cfrac{n-1}{\mathcal{G}-\cfrac{1}{a}}= \sqrt{\cfrac{n-1}{\mathcal{H}-\cfrac{1}{a^2}}}\\
+    \cfrac{\left(\mathcal{G}-\cfrac{1}{a} \right)^2}{(n-1)^2} &= \cfrac{\mathcal{H}- \cfrac{1}{a^2}}{n-1}\\
+    \\
+    \GO^2-\frac{2}{a}\GO + \frac{1}{a^2}&=\left(\HO-\frac{1}{a^2} \right)(n-1)\\
+    \frac{n}{a^2}-2 \GO \frac{1}{a}+ \GO^2- \HO(n-1)&=0\\
+    \frac{1}{a^2}- \frac{2 \GO}{n}*\frac{1}{a}+\frac{\GO^2}{n}-\frac{\HO (n-1)}{n} &= 0\\
+    \frac{1}{a}= \frac{\GO}{n} \pm \sqrt {\left(\frac{\GO}{n} \right)^2-\frac{\GO^2}{n}+ \frac{\HO (n-1)}{n}}\\
+    a=\frac{n}{\GO \pm \GO^2(1-n)+ \HO (n(n-1))}
+\end{align*}
+$x_{i+1}=x_i -a$ We want a to be small.
+For real $\GO$:
+\begin{equation*}
+    a = \frac{n}{\GO + \text{sign}(\GO) \sqrt {\GO^2(1-n)+ \HO n(n-1)}}
+\end{equation*}
+for complex values we choose sign that maximize the absolute value of the denominator.
+\textrightarrow{} Cubic convergence in the proximity of a single root, reliable convergence to some root.
+
+\section{Deflation}\label{sec:deflation}
+If one root $\hat{x}$ of the polynomial $p_n$ has been found and the simplified polynomial
+$Q_{n-1}= \sfrac{p_n}{(x-\hat{x})}$ can be calculated,
+$Q_{n-1}$ can be evaluated since it is of a lower order and the roots of $Q_{n-1}$ are the remaining unknown roots.
+One avoids to find $\hat{x}$ a second time.
+This process can be repeated for each new root.
+If $p_n$ has only real coefficients and if the root $\hat{x}$ is complex, then the complex
+conjugate  $\bar{\hat{x}}$ is also a root of $p_n$.
+In that case, we can divide by the product $(x-\bar{\hat{x}})(x-\hat{x})$ which
+reduces the order of $p_n$ by 2.
+
+Deflation is stable if one goes from absolutely small to large roots and starts
+the polynomial division with the coefficients of highest order or if one goes
+from large to small roots and starts division of the scalar term.
+In any case, at the end all roots should be optimized using the original polynomial.
+

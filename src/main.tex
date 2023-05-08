@@ -6,11 +6,16 @@
 \usepackage{textcomp}
 \usepackage{booktabs}
 \usepackage{enumitem}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{nicefrac, xfrac}
+
 
 
 
 \mathcode`\*="8000{\catcode`\*\active\gdef*{\cdot}}
-\setlength{\parindent}{0pt}
+\DeclareMathOperator{\HO}{\mathcal{H}}
+\DeclareMathOperator{\GO}{\mathcal{G}}
 
 \title{Numerical Methods - Lecture 1\\
 {\Large University Leipzig}}
@@ -21,9 +26,10 @@
     \maketitle
     \tableofcontents
 
-    \include{Chapter/1numberSystems}
-    \include{Chapter/2representationOfNumbers}
-    \include{Chapter/Lecture3.1}
+    %\include{Chapter/1numberSystems}
+    %\include{Chapter/2representationOfNumbers}
+    %\include{Chapter/3stabilityAndFixpointTheorem}
+    \include{Chapter/lecture4}
 
 
 
