@@ -56,7 +56,7 @@ with negative numbers \textrightarrow{} 1 byte signed integer:
 
 
 \section{Floating point numbers (fractions)}\label{sec:floating-point-numbers-(fractions)}
-Floating-point numbers are the product of number $m \in (0,1)$ called mantissa, an integer e power of
+Floating-point numbers are the product of a number $m \in (0,1)$ called mantissa, an integer power e of
 a base b (usually b = 2) and a sign s.
 \begin{equation*}
     x = (-1)^s * m * b^e
@@ -89,6 +89,8 @@ Datatype ``single precision`` / 32-bit float
         00000000     & 0             & -127       \\
         \bottomrule
     \end{tabular}
+
+    $x = e-127$ (Where x represents the exponent)
 
     The values $e = 127$ and $e = 128$ are not used in the usual way.
     Instead, they are reserved for special cases (e.g. $\pm 0$, $ \pm \infty$, signaling NaN)

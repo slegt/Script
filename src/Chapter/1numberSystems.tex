@@ -44,7 +44,7 @@ $1709_{10}$ in base $8$:
 \end{align*}
 generally
 \begin{align*}
-    x = (\ldots (((a_nb+a_{n-1})b+a_{n-2})b+\ldots+a_1)b+a_0
+    x = (\ldots (((a_n b+a_{n-1})b+a_{n-2})b+\ldots)b+a_1)b+a_0
 \end{align*}
 $a_0$ is remainder from division $x/b$
 generally $a_i$ is the remainder from
@@ -83,29 +83,18 @@ for example: $a_{-1}$ is position in front of the dot in $x*8$
 
 
 \section{Special Systems}\label{sec:special-systems}
-The transformation becomes particularly simple if the base of one system is power or root of the other base. E.g.: $b = 2 = \sqrt[3]{8}$ from octal to binary
+The transformation becomes particularly simple if the base of one system is power or root of the other base. E.g.: $b = 2 = \sqrt[3]{8}$ from octal to binary.
 \begin{flalign*}
     1709_{10}   = &3*8^3+2*8^2+5*8^1+5\\
     = &3*2^9+2*2^6+5*2^3+5\\
     = &(0*2^2+1*2^1+^*2^0)*2^9+(0*2^2+1*2^1+0*2^0)*2^6\\
     &+(1*2^2+0*2^1+1*2^0)*2^3+(1*2^2+0*2^1+1*2^0)*2^0\\
-    = &011010101101_2
+    = &\underbrace{011}_{3_8}\underbrace{010}_{2_8} \underbrace{101}_{5_8} \underbrace{101}_{5_8}_2
 \end{flalign*}
-
-\begin{flalign*}
-    &3_8 = 011_2\\
-    &2_8 = 010_2\\
-    &5_8 = 101_2
-\end{flalign*}
-
 From binary to hexadecimal:
-
-\begin{flalign*}
-    011010101101_2 &= 6AD_{16}\\
-    0110_2 &= 6_{16}\\
-    1010_2 = 10_{10} &= A_{16}\\
-    1101_2 = 13_{10} &= D_{16}
-\end{flalign*}
+\begin{equation*}
+    \underbrace{0110}_{6_{16}} \underbrace{1010}_{A_{16}} \underbrace{1101}_{D_{16}}2 &= 6AD_{16}\\
+\end{equation*}
 
 
 
