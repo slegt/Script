@@ -12,14 +12,15 @@
 \usepackage{nicefrac, xfrac}
 
 
-
-
 \mathcode`\*="8000{\catcode`\*\active\gdef*{\cdot}}
 \DeclareMathOperator{\HO}{\mathcal{H}}
 \DeclareMathOperator{\GO}{\mathcal{G}}
 
 \theoremstyle{definition}
-\newtheorem*{definition}{Definition}[section]
+\newtheorem*{definition}{Definition}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{lemma}{Lemma}
+
 
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
@@ -35,13 +36,11 @@
     \tableofcontents
 
 
-    %\include{Chapter/1numberSystems}
-    %\include{Chapter/2representationOfNumbers}
-    %\include{Chapter/3stabilityAndFixpointTheorem}
-    %\include{Chapter/lecture4}
+    \include{Chapter/1numberSystems}
+    \include{Chapter/2representationOfNumbers}
+    \include{Chapter/3stabilityAndFixpointTheorem}
+    \include{Chapter/lecture4}
     \include{Chapter/Lecture5}
-
-
 
 
 \end{document}

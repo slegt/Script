@@ -59,7 +59,8 @@ This is a stable algorithm.
     \end{tabular}
 \end{center}
 
-A numerical algorithm is called stable, if the provided solution to a problem P is the exact solution to a Problem Q that can be derived from P by a slight variation of the input data.
+A numerical algorithm is called stable, if the provided solution to a problem P is the exact
+solution to a Problem Q that can be derived from P by a slight variation of the input data.
 Else it is called unstable.
 
 
@@ -96,58 +97,68 @@ Consider the difference
     |x_{i+1}-x_i| = |\Phi(x_i)-\Phi(x_{i-1})|
 \end{equation*}
 
-\emph{Definition:} Let $I=[a,b] \subset \mathbb{R}$ be an interval and $\Phi: I \to \mathbb{R}$ is a contraction on I if there is a $0 \leq \theta < 1$
-such that $|\Phi(x)-\Phi(y)| \leq \theta |x-y|$.
+\begin{definition}
+    Let $I=[a,b] \subset \mathbb{R}$ be an interval.
+    $\Phi: I \to \mathbb{R}$ is a contraction on I if there is a $0 \leq \theta < 1$
+    such that $|\Phi(x)-\Phi(y)| \leq \theta |x-y|$.
+\end{definition}
 
-Remark: $\theta$ is called Lipschitz constant $\to$ Lipschitz continuity if $0 \leq \theta < \infty$
+\begin{remark}
+    $\theta$ is called Lipschitz constant $\to$ Lipschitz continuity if $0 \leq \theta < \infty$
+\end{remark}
 
-\vspace{10mm}
-
-\emph{Lemma:} If $\Phi: I \to  \mathbb{R}$ is continuously differentiable on I ($\theta \in C^1(I)$) then
-\begin{equation*}
-    \sup_{\substack{x,y \in I}} \frac{|\Phi(x)-\Phi(y)|}{|x-y|} = \sup_{\substack{z \in I}} \Phi'(x)
-\end{equation*}
-Proof: mean value theorem: For all $x,y \in I$, $x<y$ there is a $\xi \in [a,b]$ such that\\
-$\Phi(x)-\Phi(y) = \Phi'(\xi)(x-y)$
-
-\vspace{10mm}
-
-\emph{Fixed-point theorem:} Let $I=[a,b] \subset \mathbb{R}$ be an interval and $\Phi: I \to I$ a contraction with Lipschitz constant $0 < \theta < 1$
-Then:
-\begin{enumerate}[label=(\roman*)]
-    \item there is exactly one fixed-point $\hat{x}$ of $\Phi$, such that $\Phi(\hat{x}) = \hat{x}$
-    \item For any initial value $x_0 \in I$ the fixed-point iteration $x_{i+1} = \Phi(x_i)$ converges against $\hat{x}$ with
+\begin{lemma}
+    If $\Phi: I \to  \mathbb{R}$ is continuously differentiable on I ($\Phi \in C^1(I)$) then
+    \begin{equation*}
+        \sup_{\substack{x,y \in I}} \frac{|\Phi(x)-\Phi(y)|}{|x-y|} = \sup_{\substack{z \in I}} \Phi'(z)
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    mean value theorem: For all $x,y \in I$, $x<y$ there is a $\xi \in I$ such that
+    \begin{equation*}
+        \Phi(x)-\Phi(y) = \Phi'(\xi)(x-y
+    \end{equation*}
+\end{proof}
+\begin{theorem}[Fixed-point theorem]
+    Let $I=[a,b] \subset \mathbb{R}$ be an interval and $\Phi: I \to I$ a contraction with Lipschitz constant $0 < \theta < 1$
+    Then:
+    \begin{enumerate}[label=(\roman*)]
+        \item there is exactly one fixed-point $\hat{x}$ of $\Phi$, such that $\Phi(\hat{x}) = \hat{x}$
+        \item For any initial value $x_0 \in I$ the fixed-point iteration $x_{i+1} = \Phi(x_i)$ converges against $\hat{x}$ with
+        \begin{align*}
+            |x_{i+1}-x_i| &\leq \theta *|x_i-x_{i-1}|\hbox{ and}\\
+            |\hat{x}-x_i| &\leq \frac{\theta^i}{1- \theta} * |x_1-x_0|
+        \end{align*}
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    For all $x_0 \in I$
     \begin{align*}
-        |x_{i+1}-x_i| &\leq \theta *|x_i-x_{i+1}|\hbox{ and}\\
-        |\hat{x}-x_i| &\leq \frac{\theta^i}{1- \theta} * |x_1-x_0|
+        |x_{i+1}-x_i|=|\Phi(x_{i})-\Phi(x_{i-1})| &\leq  \theta * |x_i-x_{i-1}| \text{ therefore}\\
+        |x_{i+1}-x_i| &\leq \theta^i*|x_1-x_0|
     \end{align*}
-\end{enumerate}
-Proof: For all $x_0 \in I$
-\begin{align*}
-    |x_{i+1}-x_i|=|\Phi(x_{i+1})-\Phi(x_i)| &\leq  \theta * |x_i-x_{i-1}| \mbox{ therefore}\\
-    |x_{i+1}-x_i| &\leq \theta^i*|x_1-x_0|
-\end{align*}
-Now we show that $x_i$ is a Cauchy sequence:
-\begin{align*}
-    |x_{i+k}-x_i| &\leq |x_{i+k}-x_{i+k-1}|+|x_{i+k-1}-x_{i+k-2}|+\ldots + |x_{i+1}-x_i|\\
-    &\leq (\theta^{i+k-1}+\theta^{i+k-2}+\ldots+\theta^i)* |x_1-x_0|\\
-    &= \theta^i*(\theta^{k-1}+\theta^{k-2}+\ldots+\theta^{0})*|x_1-x_0| \\
-    &\leq \frac{\theta^i}{1-\theta}* |x_1-x_0|
-\end{align*}
-Therefore, $x_i$ is a Cauchy sequence which implies convergence. $\hat{x} = \lim_{\substack{i \to \infty}}x_i$ is also a fixpoint of $\Phi$, since:
-\begin{align*}
-    |\hat{x} - \Phi(\hat{x})|&=|\hat{x}-x_{i+1}+x_{i+1}-\Phi(\hat{x})|\\
-    & = |\hat{x}-x_{i+1}+\Phi(x_i)-\Phi(\hat{x})|\\
-    & \leq |\hat{x}-x_{i+1}| + |\Phi(x_i)-\Phi(\hat{x})|\\
-    &  \leq |\hat{x}-x_i|+ \theta * |\hat{x}-x_i|\\
-    &\to 0  \hbox{ for } i \to \infty
-\end{align*}
-Show that there is only one fixed-point by assuming the opposite.
-If $\hat{x}$ and $\hat{y}$ are distinct fixed-points, then
-\begin{equation*}
-    0 \leq |\hat{x}-\hat{y}| = |\Phi(\hat{x})-\Phi(\hat{y})| \leq \theta * |\hat{x}-\hat{y}|
-\end{equation*}
-but $\theta < 1$, therefore this is only possible if $|\hat{x}- \hat{y}| = 0 \implies \hat{x} = \hat{y}$
+    Now we show that $x_i$ is a Cauchy sequence:
+    \begin{align*}
+        |x_{i+k}-x_i| &\leq |x_{i+k}-x_{i+k-1}|+|x_{i+k-1}-x_{i+k-2}|+\ldots + |x_{i+1}-x_i|\\
+        &\leq (\theta^{i+k-1}+\theta^{i+k-2}+\ldots+\theta^i)* |x_1-x_0|\\
+        &= \theta^i*(\theta^{k-1}+\theta^{k-2}+\ldots+\theta^{0})*|x_1-x_0| \\
+        &\leq \frac{\theta^i}{1-\theta}* |x_1-x_0|
+    \end{align*}
+    Therefore, $x_i$ is a Cauchy sequence which implies convergence. $\hat{x} = \lim_{\substack{i \to \infty}}x_i$ is also a fixpoint of $\Phi$, since:
+    \begin{align*}
+        |\hat{x} - \Phi(\hat{x})|&=|\hat{x}-x_{i+1}+x_{i+1}-\Phi(\hat{x})|\\
+        & = |\hat{x}-x_{i+1}+\Phi(x_i)-\Phi(\hat{x})|\\
+        & \leq |\hat{x}-x_{i+1}| + |\Phi(x_i)-\Phi(\hat{x})|\\
+        &  \leq |\hat{x}-x_i|+ \theta * |\hat{x}-x_i|\\
+        &\to 0  \hbox{ for } i \to \infty
+    \end{align*}
+    Show that there is only one fixed-point by assuming the opposite.
+    If $\hat{x}$ and $\hat{y}$ are distinct fixed-points, then
+    \begin{equation*}
+        0 \leq |\hat{x}-\hat{y}| = |\Phi(\hat{x})-\Phi(\hat{y})| \leq \theta * |\hat{x}-\hat{y}|
+    \end{equation*}
+    but $\theta < 1$, therefore this is only possible if $|\hat{x}- \hat{y}| = 0 \implies \hat{x} = \hat{y}$
+\end{proof}
 
 
 \section{Rate of convergence}\label{sec:rate-of-convergence}

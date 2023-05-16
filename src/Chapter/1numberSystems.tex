@@ -6,11 +6,11 @@ Standard decimal number:
 The $10$ indicates the base $b=10$.
 Generally we can write a number as follows:
 \begin{align*}
-    x =\pm a_n*b^n+a_{n-1}*b^{n-1}+\ldots+a_0b^0+a_{-1}b^{-1}+\ldots
+    x =\pm a_n*b^n+a_{n-1}*b^{n-1}+\ldots+a_0 b^0+a_{-1}b^{-1}+\ldots
 \end{align*}
 Where $b \in \mathbb{N}$, $b>1$ and $a_i \in \{0,1, \dots, b-1\}$
 
-If $b \leq 10$ the usually symbols can be used.
+If $b \leq 10$ the usual symbols can be used.
 If $b>10$ new symbols are needed.
 E.g.: hexadecimal ($b=16$):
 
@@ -35,8 +35,8 @@ $1709_{10}$ in base $8$:
 \end{align*}
 \emph{alternatively:} calculate in the new system:
 \begin{flalign*}
-    &10_{10} = 12_8\\
-    &1709_{10} = 1 * {12_8}^3+7*{12_8}^2+0*{12_8}^1+9*{12_8}^0
+    10_{10} &= 12_8\\
+    1709_{10} &= 1 * {12_8}^3+7*{12_8}^2+0*{12_8}^1+9*{12_8}^0
 \end{flalign*}
 \emph{better alternative:} division with remainder:
 \begin{align*}
@@ -83,7 +83,8 @@ for example: $a_{-1}$ is position in front of the dot in $x*8$
 
 
 \section{Special Systems}\label{sec:special-systems}
-The transformation becomes particularly simple if the base of one system is power or root of the other base. E.g.: $b = 2 = \sqrt[3]{8}$ from octal to binary.
+The transformation becomes particularly simple if the base of one system is power or root of the other base.
+E.g.: $b = 2 = \sqrt[3]{8}$ from octal to binary.
 \begin{flalign*}
     1709_{10}   = &3*8^3+2*8^2+5*8^1+5\\
     = &3*2^9+2*2^6+5*2^3+5\\
@@ -93,7 +94,7 @@ The transformation becomes particularly simple if the base of one system is powe
 \end{flalign*}
 From binary to hexadecimal:
 \begin{equation*}
-    \underbrace{0110}_{6_{16}} \underbrace{1010}_{A_{16}} \underbrace{1101}_{D_{16}}2 &= 6AD_{16}\\
+    \underbrace{0110}_{6_{16}} \underbrace{1010}_{A_{16}} \underbrace{1101}_{D_{16}}2 = 6AD_{16}\\
 \end{equation*}
 
 
