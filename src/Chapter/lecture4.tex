@@ -141,7 +141,7 @@ Solution:
 with unknown roots $\xi_i$
 \begin{align*}
     p_n(\xi_i) &= 0\\
-    \ln \lvert p_n(x) \rvert &= \ln(a_n) + \ln \lvert x- \xi_1 \rvert + \ln \lvert x- \xi_2 \rvert
+    \ln | p_n(x) | &= \ln(a_n) + \ln \lvert x- \xi_1 \rvert + \ln \lvert x- \xi_2 \rvert
     +\ldots + \ln \lvert x- \xi_n \rvert\\
     \frac{d}{dx} \left( \ln \lvert p_n(x)\rvert \right) = \frac{P_n'(x)}{p_n(x)}
     &= \frac{1}{x-\xi_1}+\frac{1}{x-\xi_2}+ \ldots + \frac{1}{x-\xi_n} \coloneqq \mathcal{G}(x)\\
@@ -191,4 +191,19 @@ Deflation is stable if one goes from absolutely small to large roots and starts
 the polynomial division with the coefficients of highest order or if one goes
 from large to small roots and starts division of the scalar term.
 In any case, at the end all roots should be optimized using the original polynomial.
+
+\section{Eigenvalue methods}\label{sec:eigenvalue-methods}
+It can be shown that the polynomial $p_n = \sum_{i=0}^{n}a_i*x^i$ has the same roots as the characteristic polynom of:
+\begin{equation*}
+    A=
+    \begin{pmatrix}
+        \dfrac{a_{n-1}}{a_n} & \dfrac{a_{n-2}}{a_n} &\dots & \dfrac{a_0}{a_n}\\[0.9em]
+        1 & 0 & \dots & 0\\[0.5em]
+        0 & 1 & \dots & 0\\[0.5em]
+        \vdots & \vdots &\ddots &0 \\[0.5em]
+        0 &  \dots & 1 & 0
+    \end{pmatrix}
+\end{equation*}
+Therefore, roots of $p$ are Eigenvalues of A and can be found using Eigenvalue-methods.
+
 
