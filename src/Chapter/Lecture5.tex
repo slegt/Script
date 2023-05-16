@@ -1,0 +1,110 @@
+\section{Aithen's Methods}\label{sec:aithen's-methods}
+If one already uses an algorithm that shows linear convergence, Aithen's method might be useful to
+accelerate convergence.
+Linear convergence:
+\begin{equation*}
+    \lvert x_{i+1} - \hat{x} \rvert \leq C * \lvert x_i - \hat{x} \rvert
+\end{equation*}
+Assuming:
+\begin{align*}
+    \frac{ x_{i+1}-\hat{x} }{x_i - \hat{x}} &\approx
+    \frac{ x_{i+2}-\hat{x}}{x_{i+1}-\hat{x}}\\
+    (x_{i+1}-\hat{x})^2 &\approx (x_{i+2}-\hat{x})(x_i-\hat{x})\\
+    x_{i+1}^2-2x_{i+1}\hat{x} &\approx x_i x_{i+2}-(x_i+x_{i+2})\hat{x}\\
+    \hat{x}(x_i-2x_{i+1}+x_{i+2}) &\approx x_i x_{i+2}- x_{i+1}^2\\
+    \hat{x} &\approx \frac{x_i x_{i+2}-x_{i+1}}{x_i-2x_{i+1} x_{i+2}}\\
+    \frac{x_i x_{i+2}-2x_i x_{i+1}+x_i^2-x_{i+1}^2+2x_i x_{i+2}-x_i^2}{x_i-2x_{i+1}+x_{i+2}}&\approx x_i-\frac{(x_{i+1}-x_i)^2}{x_{i+2}-2x_{i+1}+x_i}\\
+\end{align*}
+This method is also called $\Delta^2$-method.
+\begin{align*}
+    \Delta y_n = y_{n+1}-y_n\\
+    \Delta^2 y_n &= \Delta(\Delta y_n) = \Delta y_{n+1}-\Delta y_n = (y_{n+2}-y_{n+1})-(y_{n+1}-y_n)\\
+    &=y_{n+2} -2y_{n+1}+y_n
+\end{align*}
+\begin{align*}
+    \to \hat{x}\approx x_i - \frac{(\Delta x_i)^2}{\Delta^2 x_i}
+\end{align*}
+
+\chapter{Interpolation}\label{ch:interpolation}
+Often instead of a function f only individual values $f(x_i)$ and
+perhaps values of the derivatives $f'(x_i), f''(x_i)$ are available.
+This is for instance the case if differential equations are being solved
+numerically or with experimental data.
+However, for experimental data, one typically uses fitting and not interpolation)
+If one wants to obtain function values st intermediate position, integrate or
+simply get a smooth representation, one has to interpolate.
+THat means one searches for a function $\varphi$ that agrees with $f$, $f'(x), \ldots$
+at the nodes $x_i$:
+\begin{align*}
+    f(x_i)=\varphi(x_i)\\
+    f'(x_i)=\varphi'(x_i)
+\end{align*}
+
+\section{Polynomial interpolation}\label{sec:polynomial-interpolation}
+simple problem (no derivatives) $y_i = f(x_i)$ with $i = 0, \ldots, n$ given,
+looking for polynomial $p \in \mathbb{P}_n$ of degree $\leq n$ such that
+$P(x_i) = y_i$
+
+$P$ is unambiguous.
+To show this, we assume the negation:
+\begin{equation*}
+    P, q \in \mathbb{P}_n; p(x_i)=q(x_i)=y_i, for all $i = 0, \ldots, n$
+\end{equation*}
+Then $p-q$ is a polynomial of degree $\leq n$ with roots at
+$x_0, x_1, \ldots x_n$.But non-zero polynomials of degree $n$ have at most
+exactly $n$ roots hence $p(x)-q(x) = 0$
+There are different methods for finding $p$, which can be associated with different
+bases of the space of polynomials.
+\subsection{Vandermond-Matrix}\label{subsec:vandermond-matrix}
+Using the monomial basis $\{ 1, x, x^2, x^3, \ldots, x^n$ $P(x_i) = y_i$ forms a
+linear system of equations:
+\begin{equation*}
+    \begin{pmatrix*}
+        1 &x_0 &x_0^2 &\ldots & x_0^n\\
+        1 &x_1 &x_1^2 &\ldots & x_1^n\\
+        \vdots \\
+        1 & x_n & x_n^2&\ldots  &x_n^2
+    \end{pmatrix*}
+    *
+    \begin{pmatrix*}
+        a_0 \\
+        \vdots\\
+        a_n
+    \end{pmatrix*}
+    =
+    \begin{pmatrix*}
+        y_0\\
+        \vdots\\
+        y_n
+    \end{pmatrix*}
+\end{equation*}
+The solution (inversion of $U$) is computationally expensive ($\propto n^3$) operations).
+\subsection{Lagrange polynomials}\label{subsec:lagrange-polynomials}
+An alternative basis is given by the Lagrange-polynomials $L_0, L_1, \ldots, L_n$ which implicitly are defined through $L_i(x_j) = \delta_{ij}$.\\
+The explicit form is:
+\begin{equation*}
+    \prod_{j=0}^n \frac{x-x_j}{x_i-x_j}
+\end{equation*}
+The interpolating polynomial $P$ is obtained by superposition
+\begin{align*}
+    P(x) &= \sum_{i=0}^{n}y_i*L_i(x)\\
+    \to P(x_j)&=\sum_{i=0}^{n} y_i L_i(x_j)= \sum_{i=0}^{n} y_i * \delta_{ij} = y_j\\
+    \\
+    P(x) &= y_0 L_0 (x) + y_1 L_1 (x) + y_2 L_2 (x) + \ldots\\
+    P(x_2) &= \underbrace{y_0 L_0
+        (x_2)}_0 + \underbrace{y_1 L_1 (x_2)}_0 + \underbrace{y_2 L_2 (x_2)}_{y_2} + \underbrace{y_3 L_3 (x_2)}_0, \ldots\\
+\end{align*}
+\begin{remark}
+    The Lagrange polynomials form an orthonormal basis with respect
+    to the inner product $<P, Q>=\\sum_{i=0}^{n} P(x_i) Q(x_i)$
+    \begin{align*}
+        \to <P, L_i> &= P(x_i)\\
+        P &= \sum_{i=0}^n <P, L_{i}> L_i = \sum_{i=0}^{n} P(x_i) L_i
+        = \sum_{i=0}^{n} y_i L_i(x)
+    \end{align*}
+\end{remark}
+\begin{example}
+    
+\end{example}
+
+
