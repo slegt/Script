@@ -116,7 +116,7 @@ Consider the difference
 \begin{proof}
     mean value theorem: For all $x,y \in I$, $x<y$ there is a $\xi \in I$ such that
     \begin{equation*}
-        \Phi(x)-\Phi(y) = \Phi'(\xi)(x-y
+        \Phi(x)-\Phi(y) = \Phi'(\xi)(x-y)
     \end{equation*}
 \end{proof}
 \begin{theorem}[Fixed-point theorem]
@@ -149,7 +149,7 @@ Consider the difference
         |\hat{x} - \Phi(\hat{x})|&=|\hat{x}-x_{i+1}+x_{i+1}-\Phi(\hat{x})|\\
         & = |\hat{x}-x_{i+1}+\Phi(x_i)-\Phi(\hat{x})|\\
         & \leq |\hat{x}-x_{i+1}| + |\Phi(x_i)-\Phi(\hat{x})|\\
-        &  \leq |\hat{x}-x_i|+ \theta * |\hat{x}-x_i|\\
+        &  \leq |\hat{x}-x_{i+1}|+ \theta * |\hat{x}-x_i|\\
         &\to 0  \hbox{ for } i \to \infty
     \end{align*}
     Show that there is only one fixed-point by assuming the opposite.
@@ -162,11 +162,11 @@ Consider the difference
 
 
 \section{Rate of convergence}\label{sec:rate-of-convergence}
-A sequence $x_i \in \mathbb{R}$ converges with order (at least) $P \leq 1$ against $\hat{x}$ if there is a constant $C>0$ such that
+A sequence $x_i \in \mathbb{R}$ converges with order (at least) $P \geq 1$ against $\hat{x}$ if there is a constant $C \geq 0$ such that
 \begin{equation*}
     |x_{i+1}-\hat{x}| \leq C * |x_i-\hat{x}|^P
 \end{equation*}
-where if $P=1$ it is additionally required that $C>1$.
+where if $P=1$ it is additionally required that $C<1$.
 If $P=1$ we speak of linear convergence, if $P=2$ of quadratic convergence.
 
 Alternatively the rate of convergence can also be defined through the inequalities of differences of adjacent elements of the sequence.
@@ -188,43 +188,43 @@ First order taylor expansion at current position x:
     x_{i+1} &= x_i - \frac{f(x_i)}{f'(x_i)}
 \end{align*}
 This is a fixed-point equation with the iteration function $\Phi(x)= x - \dfrac{f(x)}{f'(x)}$
+\begin{example}
+    Calculation of the squareroot of C\@.
+    \begin{equation*}
+        f(x)=x^2-C
+    \end{equation*}
+    In floating point calculation the exponent of C should be treated separately
+    \begin{equation*}
+        \sqrt {C} = \sqrt {m * 2^e} = \sqrt {m} * 2^{\sfrac{e}{2}}
+    \end{equation*}
+    and $\sqrt{2}$ (for odd e) be calculated once and stored
+    \begin{align*}
+        \sqrt {m} &= ? \\
+        f(x) = x^2-m &= 0 \\
+        f'(x) &= 2x \neq 0
+    \end{align*}
+    Where $m\in[1,2)$ and $x \in \left[1, \sqrt{2}\right]$
 
-\vspace{10mm}
+    \begin{align*}
+        \Phi(x)&=x- \frac{f(x)}{f'(x)}= x- \frac{x^2-m}{2x}= \frac{x}{2}+ \frac{m}{2x} = \frac{1}{2} \left( x+ \frac{m}{x} \right)\\
+        x_{i+1} &= \frac{1}{2}*\left(x_i+\frac{m}{x_i} \right)
+    \end{align*}
 
-\emph{Example:} Calculation of the squareroot of C\@.
-\begin{equation*}
-    f(x)=x^2-C
-\end{equation*}
-In floating point calculation the exponent of C should be treated separately:
-\begin{equation*}
-    \sqrt {C} = \sqrt {m * 2^e} = \sqrt {m} * 2^{\frac{e}{2}}
-\end{equation*}
-and $\sqrt{2}$ (for odd e) be calculated once and stored
-\begin{align*}
-    \sqrt {m} &= ? \\
-    f(x) = x^2-m &= 0 \\
-    f'(x) &= 2x \neq 0
-\end{align*}
-Where $m\in[1,2)$ and $x \in \left[1, \sqrt{2}\right]$
+    E.g: $m=1.96$
+    \begin{center}
+        \begin{tabular}{r l l}
+            \toprule
+            i & $x_i$              & \# correct digits \\
+            \midrule
+            0 & 1                & $\leq 1$          \\
+            1 & 1.48             & $=1$              \\
+            2 & 1.420216         & $=3$              \\
+            3 & 1.40000167       & $=6$              \\
+            4 & 1.40000000000099 & $=12$             \\
+            5 & 1.4              & $=15$             \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+    (number of correct digits approximately doubles every iteration $\to$ quadratic convervenge)
+\end{example}
 
-\begin{align*}
-    \Phi(x)&=x- \frac{f(x)}{f'(x)}= x- \frac{x^2-m}{2x}= \frac{x}{2}+ \frac{m}{2x} = \frac{1}{2} \left( x+ \frac{m}{x} \right)\\
-    x_{i+1} &= \frac{1}{2}*\left(x_i+\frac{m}{x_i} \right)
-\end{align*}
-
-E.g: $m=1.96$
-\begin{center}
-    \begin{tabular}{r l l}
-        \toprule
-        i & $x_i$              & \# correct digits \\
-        \midrule
-        0 & 1                & $\leq 1$          \\
-        1 & 1.48             & $=1$              \\
-        2 & 1.420216         & $=3$              \\
-        3 & 1.40000167       & $=6$              \\
-        4 & 1.40000000000099 & $=12$             \\
-        5 & 1.4              & $=15$             \\
-        \bottomrule
-    \end{tabular}
-\end{center}
-(number of correct digits approximately doubles every iteration $\to$ quadratic convervenge)

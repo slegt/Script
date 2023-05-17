@@ -1,9 +1,9 @@
 \section{Rate of convergence for Newton's method}\label{sec:rate-of-convergence-for-newton's-method}
 \begin{align*}
-    f(\hat{x}) &= f(x_i) + f'(x_i)(\hat{x}-x_i)+\frac{1}{2}f(x_i)*(\hat{x}-x_i)^2+\ldots\\
-    &=f(x_i)+f'(x_i)(\hat{x}-x_i)+\frac{1}{2}f(\xi)(\hat{x}-x_i)^2 \text{ for }\xi \in [\hat{x}, x_i]\\
-    \hat{x}-x_i+\frac{f(x_i)}{f'(x_i)} &= \frac{1}{2} \frac{f''(\xi)}{f'(x_i)}(\hat{x}-x_i)^2\\
-    x_{i+1}&=x_i-\frac{f(x_i)}{f'(x_i)}\\
+    0=f(\hat{x}) &= f(x_i) + f'(x_i)(\hat{x}-x_i)+\frac{1}{2}f(x_i)''(\hat{x}-x_i)^2+\ldots\\
+    &=f(x_i)+f'(x_i)(\hat{x}-x_i)+\frac{1}{2}f(\xi)''(\hat{x}-x_i)^2 \text{ for }\xi \in [\hat{x}, x_i]\\
+    \hat{x}\underbrace{-x_i+\frac{f(x_i)}{f'(x_i)}}_{x_{i+1}=x_i-\frac{f(x_i)}{f'(x_i)}} &= \frac{1}{2} \frac{f''(\xi)}{f'(x_i)}(\hat{x}-x_i)^2\\
+    \\
     \hat{x}-x_{i+1}&=\frac{f''(\xi)}{2f'(x)}(\hat{x}-x_i)^2
 \end{align*}
 Hence if $f'$ is limited and if $\lvert f'(x) \rvert>\epsilon >0$ on an interval that contains the root,
@@ -53,11 +53,11 @@ Then $P$ has at least one root $\hat{z}$ with $P(\hat{z})=0$
 If roots are counted according to their multiplicity, $P$ has $n$ roots.
 If the roots $\hat{z_i}$ are known the polynomial can be written as
 \begin{equation*}
-    P(z)=a_n(z-z_1)(z-z_2)\ldots(z-z_n)
+    P(z)=a_n(z-\hat{z_1})(z-\hat{z_2})\ldots(z-\hat{z_n})
 \end{equation*}
-$z_i = z_j$ for $i \neq j$ is possible \textrightarrow{} two fold root in the representation of $P$.
+$\hat{z_i} = \hat{z_j}$ for $i \neq j$ is possible \textrightarrow{} two fold root in the representation of $P$.
 \begin{equation*}
-    P(z) = a_n(z-z_1)^{m_1}(z-z_2)^{m_2}\ldots (z-z_n)^{m_n}
+    P(z) = a_n(z-\hat{z_1})^{m_1}(z-\hat{z_2})^{m_2}\ldots (z-\hat{z_n})^{m_n}
 \end{equation*}
 Where the roots $z_i$ are pairwise distinct.
 $m_i \in \mathbb{N}$ is called the multiplicity of the root $z_i$.
@@ -79,7 +79,7 @@ Then:
     y_2 &=a(x_2-x_3)^2+b(x_2-x_3)+c\\
     y_3 &=c
 \end{align*}
-Task: Get the $a,b,c$ find root of $\tilde{p}=a\tilde{x}^2+b\tilde{x}+c$ and iterate again with
+Task: Get the $a,b,c$ find root of $\tilde{P}(\tilde{x})=a\tilde{x}^2+b\tilde{x}+c$ and iterate again with
 $x_4 = \hat{\tilde{x}}+x_3$
 
 First we eliminate the parameter b to calculate a:
@@ -87,7 +87,7 @@ First we eliminate the parameter b to calculate a:
     \frac{y_1-c}{x_1-x_3}&=a(x_1-x_3)+b\\
     \frac{y_2-c}{x_2-x_3}&=a(x_2-x_3)+b\\
     \\
-    a(x_1-x_2)&=\frac{y_1-c}{x_1-x_3}-\frac{x_2-c}{x_2-x_3}\\
+    a(x_1-x_2)&=\frac{y_1-c}{x_1-x_3}-\frac{y_2-c}{x_2-x_3}\\
     a&=\frac{(y_1-y_3)(x_2-x_3)-(y_2-y_3)(x_1-x_3)}{(x_1-x_3)(x_2-x_3)(x_1-x_2)}
 \end{align*}
 Now we can calculate the parameter b:
@@ -104,7 +104,7 @@ We select the solution that leads to the smaller $\lvert x_4- x_3 \rvert$ (The n
 Hence, the difference in the numerator and potential rounding issues.
 Solution:
 \begin{align*}
-    x_4-x_3 = \hat{\tilde{x}} &= \cfrac{(-b \pm \sqrt {b²-4ac})*(-b \mp \sqrt{4ac})}{2a*(-b \mp \sqrt {b^2-4ac})}\\
+    x_4-x_3 = \hat{\tilde{x}} &= \cfrac{(-b \pm \sqrt {b^2-4ac})*(-b \mp \sqrt{b^2-4ac})}{2a*(-b \mp \sqrt {b^2-4ac})}\\
     &=\frac{b^2-(b^2-4ac)}{2a*(-b \mp \sqrt{b^2-4ac})}\\
     &=\frac{-2c}{b \pm \sqrt {b^2-4ac}}\\
     \text{Remember, we want} &\text{ to make $\lvert x_4-x_3 \rvert$ small}\\
