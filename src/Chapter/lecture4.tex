@@ -112,7 +112,7 @@ Solution:
 \end{align*}
 \begin{equation*}
     \begin{bmatrix}
-        x_1 &x_2 &x_3\\
+        x_1 & x_2 & x_3\\
     \end{bmatrix}
     \to
     \begin{bmatrix*}
@@ -134,25 +134,25 @@ Solution:
     \end{bmatrix*}
 \end{equation*}
 
+
 \section{Laguerre's Method}\label{sec:laguerres-method}
 \begin{align*}
-    p_n(x) = a_n(x-\xi_1)(x-\xi_2)\ldots(x-\xi_n)
+    P_n(x) = a_n(x-\xi_1)(x-\xi_2)\ldots(x-\xi_n)
 \end{align*}
-with unknown roots $\xi_i$
+with unknown roots $\xi_i$ ($p_n(\xi_i) = 0$)
 \begin{align*}
-    p_n(\xi_i) &= 0\\
-    \ln | p_n(x) | &= \ln(a_n) + \ln \lvert x- \xi_1 \rvert + \ln \lvert x- \xi_2 \rvert
+    \ln | P_n(x) | &= \ln(a_n) + \ln \lvert x- \xi_1 \rvert + \ln \lvert x- \xi_2 \rvert
     +\ldots + \ln \lvert x- \xi_n \rvert\\
-    \frac{d}{dx} \left( \ln \lvert p_n(x)\rvert \right) = \frac{P_n'(x)}{p_n(x)}
+    \frac{d}{dx} \left( \ln \lvert P_n(x)\rvert \right) = \frac{P_n'(x)}{P_n(x)}
     &= \frac{1}{x-\xi_1}+\frac{1}{x-\xi_2}+ \ldots + \frac{1}{x-\xi_n} \coloneqq \mathcal{G}(x)\\
-    -\frac{d^2}{dx^2}(\ln \lvert p_n(x) \rvert)= \left( \frac{p_n''(x)}{p_n(x)}\right)^2-\frac{p_n''(x)}{p_n(x)}
+    -\frac{d^2}{dx^2}(\ln \lvert P_n(x) \rvert)= \left( \frac{P_n''(x)}{P_n(x)}\right)^2-\frac{P_n''(x)}{P_n(x)}
     &= \frac{1}{(x-\xi_1)^2}+\frac{1}{(x-\xi_2)^2}+\ldots+\frac{1}{(x-\xi_n)^2} \coloneqq \mathcal{H}(x)
 \end{align*}
 $\mathcal{G}(x)$ and $\mathcal{H}(x)$ can be calculated since $p_n, p_n', p_n''$ are available.
 Assumptions:
 \begin{itemize}
     \item root closest to current estimate $x_i$ is $\xi_1$.
-    Define as a distance $a=x_i-\xi_k$
+    Define as a distance $a=x_i-\xi_1$
     \item all other roots $\xi_2, \ldots, \xi_n$ have the same distance to $x_i$. $b=x_i-\xi_k$ for $k>1$
 \end{itemize}
 Now we can find an approximation for $\mathcal{G}, \mathcal{H}$:
@@ -161,12 +161,14 @@ Now we can find an approximation for $\mathcal{G}, \mathcal{H}$:
     \mathcal{H}&= \frac{1}{a^2}+\frac{n-1}{b^2}\\
     b &= \cfrac{n-1}{\mathcal{G}-\cfrac{1}{a}}= \sqrt{\cfrac{n-1}{\mathcal{H}-\cfrac{1}{a^2}}}\\
     \cfrac{\left(\mathcal{G}-\cfrac{1}{a} \right)^2}{(n-1)^2} &= \cfrac{\mathcal{H}- \cfrac{1}{a^2}}{n-1}\\
-    \\
-    \GO^2-\frac{2}{a}\GO + \frac{1}{a^2}&=\left(\HO-\frac{1}{a^2} \right)(n-1)\\
-    \frac{n}{a^2}-2 \GO \frac{1}{a}+ \GO^2- \HO(n-1)&=0\\
-    \frac{1}{a^2}- \frac{2 \GO}{n}*\frac{1}{a}+\frac{\GO^2}{n}-\frac{\HO (n-1)}{n} &= 0\\
+\end{align*}
+\begin{align*}
+    \GO^2-\frac{2}{a}\GO + \frac{1}{a^2}=\left(\HO-\frac{1}{a^2} \right)(n-1)\\
+    \frac{n}{a^2}-2 \GO \frac{1}{a}+ \GO^2- \HO(n-1)=0\\
+    \frac{1}{a^2}- \frac{2 \GO}{n}*\frac{1}{a}+\frac{\GO^2}{n}-\frac{\HO (n-1)}{n} = 0\\
     \frac{1}{a}= \frac{\GO}{n} \pm \sqrt {\left(\frac{\GO}{n} \right)^2-\frac{\GO^2}{n}+ \frac{\HO (n-1)}{n}}\\
     a=\frac{n}{\GO \pm \GO^2(1-n)+ \HO (n(n-1))}
+
 \end{align*}
 $x_{i+1}=x_i -a$ We want a to be small.
 For real $\GO$:
@@ -175,6 +177,7 @@ For real $\GO$:
 \end{equation*}
 for complex values we choose sign that maximize the absolute value of the denominator.
 \textrightarrow{} Cubic convergence in the proximity of a single root, reliable convergence to some root.
+
 
 \section{Deflation}\label{sec:deflation}
 If one root $\hat{x}$ of the polynomial $p_n$ has been found and the simplified polynomial
@@ -192,16 +195,17 @@ the polynomial division with the coefficients of highest order or if one goes
 from large to small roots and starts division of the scalar term.
 In any case, at the end all roots should be optimized using the original polynomial.
 
+
 \section{Eigenvalue methods}\label{sec:eigenvalue-methods}
 It can be shown that the polynomial $p_n = \sum_{i=0}^{n}a_i*x^i$ has the same roots as the characteristic polynom of:
 \begin{equation*}
     A=
     \begin{pmatrix}
-        \dfrac{a_{n-1}}{a_n} & \dfrac{a_{n-2}}{a_n} &\dots & \dfrac{a_0}{a_n}\\[0.9em]
-        1 & 0 & \dots & 0\\[0.5em]
-        0 & 1 & \dots & 0\\[0.5em]
-        \vdots & \vdots &\ddots &0 \\[0.5em]
-        0 &  \dots & 1 & 0
+        \dfrac{a_{n-1}}{a_n} & \dfrac{a_{n-2}}{a_n} & \dots  & \dfrac{a_0}{a_n}\\[0.9em]
+        1                    & 0                    & \dots  & 0\\[0.5em]
+        0                    & 1                    & \dots  & 0\\[0.5em]
+        \vdots               & \vdots               & \ddots & 0 \\[0.5em]
+        0                    & \dots                & 1      & 0
     \end{pmatrix}
 \end{equation*}
 Therefore, roots of $p$ are Eigenvalues of A and can be found using Eigenvalue-methods.

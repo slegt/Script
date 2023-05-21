@@ -17,7 +17,7 @@ Assuming:
 \end{align*}
 This method is also called $\Delta^2$-method.
 \begin{align*}
-    \Delta y_n = y_{n+1}-y_n\\
+    \Delta y_n &= y_{n+1}-y_n\\
     \Delta^2 y_n &= \Delta(\Delta y_n) = \Delta y_{n+1}-\Delta y_n = (y_{n+2}-y_{n+1})-(y_{n+1}-y_n)\\
     &=y_{n+2} -2y_{n+1}+y_n
 \end{align*}
@@ -32,9 +32,9 @@ perhaps values of the derivatives $f'(x_i), f''(x_i)$ are available.
 This is for instance the case if differential equations are being solved
 numerically or with experimental data.
 However, for experimental data, one typically uses fitting and not interpolation)
-If one wants to obtain function values st intermediate position, integrate or
+If one wants to obtain function values at intermediate position, integrate or
 simply get a smooth representation, one has to interpolate.
-THat means one searches for a function $\varphi$ that agrees with $f$, $f'(x), \ldots$
+That means one searches for a function $\varphi$ that agrees with $f$, $f'(x), \ldots$
 at the nodes $x_i$:
 \begin{align*}
     f(x_i)=\varphi(x_i)\\
@@ -150,4 +150,23 @@ Newton basis: $N_0 (x) = 1$, $N_1(x) =(x-x_0)$, $N_2(x)=(x-x_0)(x-x_1)$, \ldots
     \text{since } N_i(x_0)=N_i(x_1)=\ldots=N_i(x_{i-1})=0
 \end{align*}
 The problem becomes what is $c_i$?
-effective determination through divided differences
+effective determination through divided differences($f[\ldots]$). Polynomial of degree 0:
+\begin{align*}
+    P_i(x) &= f[x_i] \coloneqq f_i = f(x_i)\\
+    P_{i, i+1} &= \frac{(x_i - x) P_{i+1}-(x_{i+1} P_i(x))}{x_i-x_{i+1}} =f[x_i]+(x-x_i)\underbrace{f[x_i, x_i+1]}_{=c}\\
+    &=\frac{(x_i-x)f[x_{i+1}]-(x_{i+1}-x) f[x_i]}{x_i-x_i+1}\\
+    f[x_i, x_{i+1}] &= \frac{(x_i-x)f[x_{i+1}]-(x_{i+1}-x) f[x_i]-(x_i-x_{i+1}) f[x_i]}{(x_i-x_{i+1})(x-x_i)}\\
+    &= \frac{(x_i-x)f[x_{i+1}]-(x_i-x)f[x_i]}{(x_i-x_{i+1})(x-x_i)}=\frac{f[x_i]-f[x_{i+1}]}{x_i-x_{i+1}}
+\end{align*}
+Let the ($n-1$)th divided difference $f[x_0, \ldots, x_{n-1}]$ and $f[x_i, \ldots, x_n]$ be known.
+\begin{align*}
+    P(x)=P_{0, \ldots, n}(x)&=P_{0,1,\ldots, n-1}(x)+f[x_0, \ldots, x_n](x-x_0)(x-x_1)\ldots(x-x_{n-1}) \text{(\textasteriskcentered{})}\\
+    P_{0,\ldots, n-1}(x)&=f[x_0]+f[x_0, x_1](x-x_0)+f[x_0,x_1,x_2](x-x_0)(x-x_1)+
+    \ldots\\
+    &\phantom{=}+f[x_0,\ldots, ]x_{n-1}(x-x_0)(x-x_1)\ldots(x-x_{n-2})\\
+    P_{1,\ldots, n} &= f[x_1] + f[x_1, x_2](x-x_1)+f[x_1, x_2, x_3](x-x_1)(x-x_2)+\ldots\\
+    &\phantom{=}+f[x_1, x_2, \ldots, x_n] (x-x_1)(x-x_2)\ldots (x-x_{n-1})\\
+    P_{0,1,\ldots, n}(x) &= \frac{(x_0-x)P_{1,\ldots, n}(x)-(x_n-x)P_{0,\ldots, n-1}}{x_0-x_n} \text{(\textasteriskcentered{}\textasteriskcentered{})}\\
+    &\text{compare coefficients of $x^n$ in (\textasteriskcentered{}) and (\textasteriskcentered{}\textasteriskcentered{})}\\
+    f[x_0,\ldots, x_n]&=\frac{f[x_0, \ldots, x_n-1]-f[x_1, \ldots, x_n]}{x_0-x_1}
+\end{align*}
