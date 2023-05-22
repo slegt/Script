@@ -12,8 +12,8 @@ Assuming:
     (x_{i+1}-\hat{x})^2 &\approx (x_{i+2}-\hat{x})(x_i-\hat{x})\\
     x_{i+1}^2-2x_{i+1}\hat{x} &\approx x_i x_{i+2}-(x_i+x_{i+2})\hat{x}\\
     \hat{x}(x_i-2x_{i+1}+x_{i+2}) &\approx x_i x_{i+2}- x_{i+1}^2\\
-    \hat{x} &\approx \frac{x_i x_{i+2}-x_{i+1}}{x_i-2x_{i+1} x_{i+2}}\\
-    \frac{x_i x_{i+2}-2x_i x_{i+1}+x_i^2-x_{i+1}^2+2x_i x_{i+2}-x_i^2}{x_i-2x_{i+1}+x_{i+2}}&\approx x_i-\frac{(x_{i+1}-x_i)^2}{x_{i+2}-2x_{i+1}+x_i}\\
+    \hat{x} &\approx \frac{x_i x_{i+2}-x_{i+1}^2}{x_i-2x_{i+1}+ x_{i+2}}\\
+    \hat{x}\approx\frac{x_i x_{i+2}-2x_i x_{i+1}+x_i^2-x_{i+1}^2+2x_i x_{i+2}-x_i^2}{x_i-2x_{i+1}+x_{i+2}}&= x_i-\frac{(x_{i+1}-x_i)^2}{x_{i+2}-2x_{i+1}+x_i}\\
 \end{align*}
 This method is also called $\Delta^2$-method.
 \begin{align*}
@@ -43,23 +43,25 @@ at the nodes $x_i$:
 
 
 \section{Polynomial interpolation}\label{sec:polynomial-interpolation}
-simple problem (no derivatives) $y_i = f(x_i)$ with $i = 0, \ldots, n$ given,
-looking for polynomial $p \in \mathbb{P}_n$ of degree $\leq n$ such that
+Simple problem (no derivatives): $y_i = f(x_i)$ with $i = 0, \ldots, n$ given,
+looking for polynomial $P \in \mathbb{P}_n$ of degree $\leq n$ such that
 $P(x_i) = y_i$
 
 $P$ is unambiguous.
 To show this, we assume the negation:
 \begin{equation*}
-    P, q \in \mathbb{P}_n; p(x_i)=q(x_i)=y_i, for all $i = 0, \ldots, n$
+    P, Q \in \mathbb{P}_n \text{ such that } P(x_i)=Q(x_i)=y_i\text{, for all } i = 0, \ldots, n
 \end{equation*}
-Then $p-q$ is a polynomial of degree $\leq n$ with roots at
-$x_0, x_1, \ldots x_n$.But non-zero polynomials of degree $n$ have at most
-exactly $n$ roots hence $p(x)-q(x) = 0$
-There are different methods for finding $p$, which can be associated with different
+Then $P-Q$ is a polynomial of degree $\leq n$ with roots at
+$x_0, x_1, \ldots x_n$.
+But non-zero polynomials of degree $n$ have at most
+exactly $n$ roots.
+Hence, $P(x)-Q(x) = 0$
+There are different methods for finding $P$, which can be associated with different
 bases of the space of polynomials.
 
-\subsection{Vandermond-Matrix}\label{subsec:vandermond-matrix}
-Using the monomial basis $\{ 1, x, x^2, x^3, \ldots, x^n$ $P(x_i) = y_i$ forms a
+\subsection{Vandermonde-Matrix}\label{subsec:vandermond-matrix}
+Using the monomial basis $\{ 1, x, x^2, x^3, \ldots, x^n\}$ $P(x_i) = y_i$ forms a
 linear system of equations:
 \begin{equation*}
     \begin{pmatrix*}
@@ -87,7 +89,7 @@ The solution (inversion of $U$) is computationally expensive ($\propto n^3$) ope
 An alternative basis is given by the Lagrange-polynomials $L_0, L_1, \ldots, L_n$ which implicitly are defined through $L_i(x_j) = \delta_{ij}$.\\
 The explicit form is:
 \begin{equation*}
-    \prod_{j=0}^n \frac{x-x_j}{x_i-x_j}
+    \prod_{j=0, j\neq i}^n \frac{x-x_j}{x_i-x_j}
 \end{equation*}
 The interpolating polynomial $P$ is obtained by superposition
 \begin{align*}
@@ -95,15 +97,15 @@ The interpolating polynomial $P$ is obtained by superposition
     \to P(x_j)&=\sum_{i=0}^{n} y_i L_i(x_j)= \sum_{i=0}^{n} y_i * \delta_{ij} = y_j\\
     \\
     P(x) &= y_0 L_0 (x) + y_1 L_1 (x) + y_2 L_2 (x) + \ldots\\
-    P(x_2) &= \underbrace{y_0 L_0
-        (x_2)}_0 + \underbrace{y_1 L_1 (x_2)}_0 + \underbrace{y_2 L_2 (x_2)}_{y_2} + \underbrace{y_3 L_3 (x_2)}_0, \ldots\\
+    P(x_2) &= y_0 \underbrace{L_0
+        (x_2)}_0 + y_1 \underbrace{L_1 (x_2)}_0 + y_2  \underbrace{L_2 (x_2)}_{1} + y_3  \underbrace{L_3 (x_2)}_0, \ldots\\
 \end{align*}
 \begin{remark}
     The Lagrange polynomials form an orthonormal basis with respect
-    to the inner product $<P, Q>=\sum_{i=0}^{n} P(x_i) * Q(x_i)$
+    to the inner product $\langle P, Q \rangle =\sum_{i=0}^{n} P(x_i) * Q(x_i)$
     \begin{align*}
-        \to{} <P, L_i> &= P(x_i)\\
-        P = \sum_{i=0}^n <P, L_{i}> L_i &= \sum_{i=0}^{n} P(x_i) L_i
+        \to{} \langle P, L_i \rangle &= P(x_i)\\
+        P = \sum_{i=0}^n \langle P, L_{i} \rangle L_i &= \sum_{i=0}^{n} P(x_i) L_i
         = \sum_{i=0}^{n} y_i L_i(x)
     \end{align*}
 \end{remark}
@@ -127,8 +129,10 @@ The interpolating polynomial $P$ is obtained by superposition
     \begin{align*}
         L_0(x) &= \frac{(x-2.5)(x-4)}{(2-2.5)(2-4)}=(x-6.5)*x+10\\
         L_1(x) &= \frac{(x-2)(x-4)}{(2.5-2)(2.5-4)}=\frac{(-4x+24)x-32}{3}\\
-        \ldots\\
-        P=\sum_{i=0}^{2}y_i*L_i(x) &= \frac{1}{2}((x-6.5)x+10)+ \frac{2}{5} \left( \frac{(-4x+24)x-32}{3} \right)+\frac{1}{4}\left( \frac{(x-4.5)x+5}{3} \right)
+        L_2(x) &= \frac{(x-2)(x-2.5)}{(4-2)(4-2.5)}= \frac{(x-4.5)x+5}{3}\\
+        P=\sum_{i=0}^{2}y_i*L_i(x) &= \frac{1}{2}((x-6.5)x+10)+ \frac{2}{5}
+        \left( \frac{(-4x+24)x-32}{3} \right)+\frac{1}{4}\left( \frac{(x-4.5)x+5}{3} \right)
+        =(0.05x-0.425)x+1.15
     \end{align*}
 \end{example}
 
@@ -145,7 +149,7 @@ Then $P_{1,2}(\hat{x})$, $P_{0,1,\ldots, n-1}(\hat{x})$, \ldots are just numbers
 \subsection{Newton's method}\label{subsec:newton's-method}
 Newton basis: $N_0 (x) = 1$, $N_1(x) =(x-x_0)$, $N_2(x)=(x-x_0)(x-x_1)$, \ldots
 \begin{align*}
-    N_i(x)=\prod_{K=0}^{i-1}(x-x_k)\\
+    N_i(x)=\prod_{k=0}^{i-1}(x-x_k)\\
     \to P_{0,1,\ldots, i-1}(x)+c_i * N_i(x) = P_{0,1,\ldots, i}(x)\\
     \text{since } N_i(x_0)=N_i(x_1)=\ldots=N_i(x_{i-1})=0
 \end{align*}

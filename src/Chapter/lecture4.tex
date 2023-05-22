@@ -161,14 +161,14 @@ Now we can find an approximation for $\mathcal{G}, \mathcal{H}$:
     \mathcal{H}&= \frac{1}{a^2}+\frac{n-1}{b^2}\\
     b &= \cfrac{n-1}{\mathcal{G}-\cfrac{1}{a}}= \sqrt{\cfrac{n-1}{\mathcal{H}-\cfrac{1}{a^2}}}\\
     \cfrac{\left(\mathcal{G}-\cfrac{1}{a} \right)^2}{(n-1)^2} &= \cfrac{\mathcal{H}- \cfrac{1}{a^2}}{n-1}\\
+    \GO^2-\frac{2}{a}\GO + \frac{1}{a^2}&=\left(\HO-\frac{1}{a^2} \right)(n-1)\\
 \end{align*}
+Now we can solve this quadratic equation to get the parameter a:
 \begin{align*}
-    \GO^2-\frac{2}{a}\GO + \frac{1}{a^2}=\left(\HO-\frac{1}{a^2} \right)(n-1)\\
-    \frac{n}{a^2}-2 \GO \frac{1}{a}+ \GO^2- \HO(n-1)=0\\
-    \frac{1}{a^2}- \frac{2 \GO}{n}*\frac{1}{a}+\frac{\GO^2}{n}-\frac{\HO (n-1)}{n} = 0\\
-    \frac{1}{a}= \frac{\GO}{n} \pm \sqrt {\left(\frac{\GO}{n} \right)^2-\frac{\GO^2}{n}+ \frac{\HO (n-1)}{n}}\\
-    a=\frac{n}{\GO \pm \GO^2(1-n)+ \HO (n(n-1))}
-
+    0 &=\frac{n}{a^2}-2 \GO \frac{1}{a}+ \GO^2- \HO(n-1)\\
+    0 &= \frac{1}{a^2}- \frac{2 \GO}{n}*\frac{1}{a}+\frac{\GO^2}{n}-\frac{\HO (n-1)}{n}\\
+    \frac{1}{a} &= \frac{\GO}{n} \pm \sqrt {\left(\frac{\GO}{n} \right)^2-\frac{\GO^2}{n}+ \frac{\HO (n-1)}{n}}\\
+    a&=\frac{n}{\GO \pm \GO^2(1-n)+ \HO (n(n-1))}
 \end{align*}
 $x_{i+1}=x_i -a$ We want a to be small.
 For real $\GO$:
