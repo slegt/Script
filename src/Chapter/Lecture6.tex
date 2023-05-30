@@ -1,0 +1,71 @@
+For $n+1$ data points $(x_i, f(x_i))$, $i = 0,1,\ldots, n$ with pairwise distinct $x_i$ there is exactly one interpolating polynomial $P(x)$
+of degree $\leq n$ which is given by
+\begin{equation*}
+    P(x) = f[x_0]+f[x_0, x_1] (x-x_0) + f[x_0, x_1, x_2] (x-x_0)(x-x_1)+\ldots + f[x_0, x_1, \ldots, x_n] (x-x_0)(x-x_1)\ldots (x-x_{n-1})
+\end{equation*}
+where the divided differences are given by
+\begin{equation*}
+    f[x_i] = f(x_i)
+    f[x_i, \ldots, x_{i+k}] = \frac{f[x_i, \ldots, x_{i+k-1}]-f[x_{i+1}, \ldots, x_{ik}]}{x_i - x_{i+k}}
+
+\end{equation*}
+Now we calculate the interpolating polynomials in the newton base, for previous example
+
+
+\begin{center}
+    \begin{tabular}{ccc}
+        \toprule
+        i & $x_i$ & $y_i$ \\
+        \midrule
+        1 & 2     & 1/2   \\
+        2 & 2.5   & 2/5   \\
+        3 & 4     & 1/4   \\
+        \bottomrule
+    \end{tabular}
+\end{center}
+
+
+\begin{center}
+    \begin{tikzpicture}[
+        node distance = 0pt,
+        every node/.style = {draw, minimum size=15mm, minimum width=40mm, inner sep=5pt, outer sep=0pt, anchor=center}
+    ]
+        \node (n1)  {$f[x_0, x_1, x_2] = \frac{-0.1-(-0.2)}{4-2}=0.05$};
+%
+        \node (n11) [below left=of n1.south]    {$f[x_0, x_2] = \frac{0.4-0.5}{2.5-2}=-0.2$};
+        \node (n12) [right=of n11]              {$f[x_1, x_2] = \frac{0.25-0.4}{4-2.5}=-0.1$};
+%
+        \node (n21) [below left=of n11.south]   {$f[x_0]=f(x_0) = 0.5$};
+        \node (n22) [right=of n21]              {$f[x_1]= f(x_1) = 0.4$};
+        \node (n23) [right=of n22]              {$f[x_2] = f(x_2) = 0.25$};
+    \end{tikzpicture}
+\end{center}
+\begin{equation*}
+    P(x)= 0.5-0.2(x-2)+0.05(x-2)(x-2.5)
+\end{equation*}
+
+
+\section{Error of polynomial interpolation}\label{sec:error-of-polynomial-interpolation}
+
+\begin{theorem}
+    Let $f:[a,b] \to \mathbb{R}$ be at least $(n+1)$ times continuously differentiable and $P(x)$ be the interpolating polynomial of f in the nodes
+    $x_0, \ldots, x_n \in [a,b]$ of degree $\leq n$. Then for every $x \in [a,b]$ there is a $\xi = \xi(x) \in [a,b]$ such that
+    \begin{equation*}
+        f(x)-P(x) = \underbrace{(x-x_0)(x-x_1)\ldots(x-x_n)}_{\coloneq W_{n+1}(x)}\frac{f^{n+1}(\xi)}{(n+1)!}
+    \end{equation*}
+\end{theorem}
+\begin{proof}
+    Let $F(x) \coloneq f(x)-p(x)-k*W_{n+1}(x)$ and select some $\hat{x}\in [a,b], \hat{x} \neq x_i$.
+    We choose K such that $F(\hat{x})=0$.
+    This is always possible since $W_{n+1}(x) \neq 0$. $F(x)$ has therefore $n+2$ roots.
+    This means that $F'(x)$ has $n+1$ roots, $F''(x)$ has n roots etc., until $F^{n+1}(x)= f^{n+1}(x)-k(n+1)!$ has one root,
+    which we call $\xi = \xi(\hat{x})$
+    \begin{align*}
+        0 &= f^{n+1}(\xi)-k*(n+1)! \\
+        K &= \frac{f^{n+1}(\xi)}{(n+1)!}
+    \end{align*}
+\end{proof}
+\begin{remark}
+    In order to estimate the error, one needs to know the boundaries of the $(n+1)$th derivative on $[a,b]$
+\end{remark}
+
