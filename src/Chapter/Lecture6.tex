@@ -1,13 +1,13 @@
 For $n+1$ data points $(x_i, f(x_i))$, $i = 0,1,\ldots, n$ with pairwise distinct $x_i$ there is exactly one interpolating polynomial $P(x)$
 of degree $\leq n$ which is given by
-\begin{equation*}
-    P(x) = f[x_0]+f[x_0, x_1] (x-x_0) + f[x_0, x_1, x_2] (x-x_0)(x-x_1)+\ldots + f[x_0, x_1, \ldots, x_n] (x-x_0)(x-x_1)\ldots (x-x_{n-1})
-\end{equation*}
+\begin{align*}
+    P(x) &= f[x_0]+f[x_0, x_1] (x-x_0) + f[x_0, x_1, x_2] (x-x_0)(x-x_1)+\\
+    &\phantom{=}\ldots + f[x_0, x_1, \ldots, x_n] (x-x_0)(x-x_1)\ldots (x-x_{n-1})\\
+\end{align*}
 where the divided differences are given by
 \begin{equation*}
     f[x_i] = f(x_i)
     f[x_i, \ldots, x_{i+k}] = \frac{f[x_i, \ldots, x_{i+k-1}]-f[x_{i+1}, \ldots, x_{ik}]}{x_i - x_{i+k}}
-
 \end{equation*}
 Now we calculate the interpolating polynomials in the newton base, for previous example
 
@@ -68,4 +68,152 @@ Now we calculate the interpolating polynomials in the newton base, for previous 
 \begin{remark}
     In order to estimate the error, one needs to know the boundaries of the $(n+1)$th derivative on $[a,b]$
 \end{remark}
+
+
+\section{Chebyshev/Tschebyscheff-polynomials}\label{sec:chebyshev/tschebyscheff-polynomials}
+If we have the freedom to choose the nodes $x_i$, then this can be used to minimize $\lvert W_{n+1}(x) \rvert$ and thus
+the error of the interpolating polynomial.
+We constrict ourselves to $[a,b] = [-1,1]$.
+If  $[a,b] \neq [-1,1]$ then the transformation
+\begin{align*}
+[-1,1]
+    &\to [a,b]\\
+    x &\to \frac{a+b}{2}+x \frac{b-a}{2}=y
+\end{align*}
+with the inverse transformation
+\begin{align*}
+[a,b]
+    \to [-1,1]\\
+    y \to \frac{2y}{b-a}- \frac{a+b}{b-a}=x
+\end{align*}
+does not change the properties of the interpolation and approximation.
+The Chebyshev polynomials are recursively defined by
+\begin{align*}
+    T_0(x) &= 1\\
+    T_1(x) &= x\\
+    T_n+1 &= 2x*T_n(x)-T_{n-1}(x)
+\end{align*}
+This implies $T_n (x)= \cos(n*\arccos(x))$
+\begin{proof}
+    \begin{align*}
+        T_{n+1} &= 2x*\cos(n*\arccos(x))-\cos((n-1) \arccos(x))\\
+        &= 2\cos (\arccos(x))*\cos(n*\arccos(x))-\cos((n-1))\underbrace{\arccos((x)}_\varphi)\\
+        &= \cos((n+1) \varphi)+\cos((n-1)\varphi)-\cos((n-1)\varphi) = \cos((n+1) \varphi)
+    \end{align*}
+\end{proof}
+
+Properties of $T_n$:
+\begin{itemize}
+    \item the roots of $T_n$ are $\cos(\frac{2k+1}{2k}*\pi)$ $(k=0,\ldots, n-1)$
+    \item $T_n\left(\cos(\frac{k*\pi}{n})\right)= (-1)^k$
+    \item $\lvert T_n(x) \rvert \leq 1$ for $x \in [-1,1]$
+\end{itemize}
+\begin{align*}
+    T_0(x) &= 1\\
+    T_1(x) &= x\\
+    T_2(x) &= 2x^2-1\\
+    T_3(x) &= 4x^{3}-3x\\
+    T_4(x) &= 8x^4-8x^2+1
+\end{align*}
+\begin{theorem}
+    From all possible $(x_0, \ldots, x_n)^T \in [-1,1]^n \subset \mathbb{R}^n$ the value $\max_{x \in [-1,1]} \lvert w_{n+1}(x) \rvert$ becomes minimal if the nodes $x_i$ are
+    the roots of the $(n+1)$st Chebyshev polynomial $T_{n+1}$
+    \begin{align*}
+        x_i &= \cos\left(\frac{2i+1}{2n+2} \pi\right), i=0,\ldots,n\\
+        \text{Then } w_{n+1}(x) &= \frac{1}{2^n}* T_{n+1}(x) \\
+        \text{and } \max_{x \in [-1,1]} \lvert x_{n+1}(x) \rvert &= \frac{1}{2^n}
+    \end{align*}
+\end{theorem}
+
+\begin{proof}
+    \begin{lemma}
+        Let $q(x)=2^{n-1}x^n+\ldots$  be a polynomial unequal to the nth Chebyshev polynomial $T_n$.
+        Then:
+        \begin{equation*}
+            \max_{x \in [-1,1]} \lvert q(x) \rvert > 1= \max_{x \in [-1,1]} \lvert T_n(x) \rvert
+        \end{equation*}
+        We assume $\lvert q(x) \rvert \leq 1$ for all $x \in [-1,1]$, $T_n(1) = 1$, $T_n\left( \cos \frac{\pi}{n} \right) = -1$.
+        We consider $T_n(x)-q_n(x)$ at $[\cos \frac{\pi}{n}, 1]$.
+        $q(x)$ and $T_n(x)$ have the same highest order coefficient $(2^{n-1})$.
+        Therefore $T_n(x)-q(x)$ is of degree $n-1$
+        \begin{align*}
+            &\lvert q(x) \rvert \leq 1\\
+            &\to T_n(1)-q(1) \geq 0\\
+            &\to T_n\left(\cos \left( \frac{\pi}{n} \right) \right) - q\left(\cos \left( \frac{\pi}{n} \right) \right) \leq 0
+        \end{align*}
+        $T_n(x)-q_(x)$ has at least one root on $[\cos\frac{\pi}{n}, 1]$.
+        In the same way, we can show that $T_n(x)-q(x)$ has at least one root on $[\cos\frac{2\pi}{n},\cos\frac{\pi}{n}]$
+        and on $[\cos\frac{3\pi}{n},\cos\frac{2\pi}{n}]$ and on \ldots and on $[-1, \cos \left( \frac{n-1  \pi}{n} \right)]$.
+        Therefore $T_n(x)-q(x)$ has n roots in $[-1,1]$.
+        If the root is situated on the boundary of two sub intervals, then it's a double root, since $T_n(x)$ and $q(x)$ extremal.
+        However $T_n(x) - q(x)$ is only of degree $\leq n-1$
+        \begin{align*}
+            T_n(x)-q(x) = 0 \text{ (!) contradicition to assumption } T_n(x) \neq q(x) \\
+            \to \max_{x \in [-1,1]} \lvert w_{n+1}(x) \rvert = \frac{1}{2^n}
+            \underbrace{\max_{x \in [-1,1]} \lvert \underbrace{2^n w_{n+1}(x)}_{T_{n+1}(x)} \rvert}_{ \geq 1 \text{ with Lemma}}\\
+            \max_{x \in [-1,1]} \lvert w_{n+1}  \rvert \geq \frac{1}{2^n} \text{ with equality if } w_{n+1}(x) = \frac{1}{2^n}*T_{n+1}(x)
+        \end{align*}
+    \end{lemma}
+\end{proof}
+
+
+\section{hermite interpolation}\label{sec:hermite-interpolation}
+If in addition to the values of $f$ also the values of the derivative $f'$ are known, we can construct the hermite interpolating polynomial.
+Every node $x_i \in \{ x_0, \ldots, x_n \}$ corresponds to $2$ conditions which implies that the interpolating polynom is of degree $2n+1$
+
+\begin{theorem}
+    Let $f \in C^1([a,b])$ and $x_0, \ldots, x_n \in [a,b]$ pairwise distinct.
+    Then the only polynomial of degree $2n+1$ that equals $f$ and $f'$ in $x_0, \dlots, x_n$ is given by
+    \begin{align*}
+        \HO_{2n+1}(x) &= \sum_{j=0}^{n} f(x_j) * \HO_{n,j}(x) + \sum_{j=0}^{n} f'(x_j) * \widehat{\HO}_{n,j}(x)\\
+        \text{where } \HO_{n,j}(x) &= [1-2(x-x_j) * L'_{n,j}(x_j)]*L_{n,j}(x)\\
+        \text{and } \widehat{\HO}_{n,j}(x) &= (x-x_j)*L_{n,j}(x)^2
+    \end{align*}
+    Here $L_{n,j}(x)$ are the Lagrange polynomials.
+    It's easy to see that $\HO_{n,j}(x_i) = \delta_{ij}$ ($L_{n,j}(x_i) = \delta_{ij}$)
+    and $\widehat{\HO}_{n,j}(x_i) = 0$ $\forall x_i$
+
+    \begin{align*}
+        \HO_{n,j}'(x) &= 2 L'_{n,j}(x_j)*L_{n,j}(x)^2 + 2[1-2(x-x_j)L_{n,j}'(x_j)]*L_{n,j}'(x)*L_{n,j}(x)\\
+        \HO_{n,j}'(x_j) &= -2L_{n,j}'(x_j)+2L_{n,j}'(x_j) = 0\\
+        H_{n,j}(x_i) |_{i \neq j} &= 0\\
+        \\
+        \widehat{\HO}_{n,j}'(x)&=L_{n,j}(x)^2+2(x-x_j)L_{n,j}'(x)L_{n,j}(x)\\
+        \widehat{\HO}_{n,j}'(x_j)&= 1\\
+        \widehat{\HO}_{n,j}'(x_i) |_{i \neq j} &= 0
+    \end{align*}
+\end{theorem}
+In summary we obtain
+\begin{align*}
+    \HO_{2n+1}(x) = \sum_{j=0}^{n} f(x_j)*\HO_{n,j}(x)+ \sum_{j=0}^{n} f'(x_j) \widehat{\HO}_{n,j}(x)
+\end{align*}
+\begin{center}
+    \begin{tabular}{c c}
+        \[ \HO_{n,j}(x_i) = \delta_{ij}\] & \[\HO_{n,j}'(x_i) = 0\]\\
+        \[ \widehat{\HO}_{n,j}(x_i) = 0\] & \[ \widehat{\HO}_{n,j}'(x_i) = \delta_{ij}\]
+    \end{tabular}
+\end{center}
+However, the construction by means of Lagrange polynomials is computationally expensive.
+Again, divided differences are useful.
+From the remainder of polynomial interpolation it follows:
+\begin{lemma}
+    Let $f \in C^n([a,b])$ and $X_0, \ldots, x_n$ be pairwise distinct in $[a,b]$.
+    Then there is a $\xi \in [a,b]$ such that
+    \begin{equation*}
+        f[x_0,\ldots, x_n] = \frac{f^{(n)}(x)}{n!} \text{ (\textasteriskcentered)}
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    If $n+1$ nodes $x_0, \ldots, x_n$ and the values $f(x_i), f'(x_i)$ $(i=0, \ldots, n)$ are given, we define a sequence [TODO]
+\end{proof}
+
+\section{Spline interpolation}\label{sec:spline-interpolation}
+Although an interpolating polynomial can always be found, this is often not a very good approximation, especially in the case of large n.
+Fluctuation in a small region can lead to great changes throughout the entire interval.
+Piecewise interpolation can be preferable.
+
+The simplest version of piecewise interpolation would employ polynomials of degree 1.
+This has the big disadvantage that the resulting curve is not smooth/differentiable.
+Better choice: Piecewise hermite interpolation with polynomials of degree 3.
+A cubic spline interpolating function is a function s with the properties
 

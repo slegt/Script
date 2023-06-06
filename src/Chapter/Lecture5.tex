@@ -131,13 +131,14 @@ The interpolating polynomial $P$ is obtained by superposition
         L_1(x) &= \frac{(x-2)(x-4)}{(2.5-2)(2.5-4)}=\frac{(-4x+24)x-32}{3}\\
         L_2(x) &= \frac{(x-2)(x-2.5)}{(4-2)(4-2.5)}= \frac{(x-4.5)x+5}{3}\\
         P=\sum_{i=0}^{2}y_i*L_i(x) &= \frac{1}{2}((x-6.5)x+10)+ \frac{2}{5}
-        \left( \frac{(-4x+24)x-32}{3} \right)+\frac{1}{4}\left( \frac{(x-4.5)x+5}{3} \right)
-        =(0.05x-0.425)x+1.15
+        \left( \frac{(-4x+24)x-32}{3} \right)+\frac{1}{4}\left( \frac{(x-4.5)x+5}{3} \right)\\
+        &=(0.05x-0.425)x+1.15
     \end{align*}
 \end{example}
 
 \subsection{Recursive determination of the interpolating polynomial / Neville's method}\label{subsec:recursive-determination-of-the-interpolating-polynomial-/-neville's-method}
-Let $P_{m_0, m_1, \dots, m_k} (x)$ be the polynomial of degree $k$ that interpolates $f(x)$ at the nodes $x_{m_0}, x_{m_1},\ldots,x_{m_k}$
+Let $P_{m_0, m_1, \dots, m_k} (x)$ be the polynomial of degree $k$ that interpolates $f(x)$\\
+at the nodes $x_{m_0}, x_{m_1},\ldots,x_{m_k}$
 \begin{equation*}
     P(x)= \frac{(x_j-x)P_{0,1,\ldots, j-1, j+1, \ldots, n}(x)-(x_i-x)P_{0,1,\ldots, i-1, i+1, \ldots, n}(x)}{(x_j-x_i)}
 \end{equation*}
