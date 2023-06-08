@@ -1,0 +1,125 @@
+In summary we obtain
+\begin{align*}
+    \HO_{2n+1}(x) = \sum_{j=0}^{n} f(x_j)*\HO_{n,j}(x)+ \sum_{j=0}^{n} f'(x_j) \widehat{\HO}_{n,j}(x)
+\end{align*}
+\begin{center}
+    \begin{tabular}{c c}
+        \[ \HO_{n,j}(x_i) = \delta_{ij}\] & \[\HO_{n,j}'(x_i) = 0\]                      \\
+        \[ \widehat{\HO}_{n,j}(x_i) = 0\] & \[ \widehat{\HO}_{n,j}'(x_i) = \delta_{ij}\]
+    \end{tabular}
+\end{center}
+However, the construction by means of Lagrange polynomials is computationally expensive.
+Again, divided differences are useful.
+From the remainder of polynomial interpolation it follows:
+\begin{lemma}
+    Let $f \in C^n([a,b])$ and $X_0, \ldots, x_n$ be pairwise distinct in $[a,b]$.
+    Then there is a $\xi \in [a,b]$ such that
+    \begin{equation*}
+        f[x_0,\ldots, x_n] = \frac{f^{(n)}(x)}{n!} \text{ (\textasteriskcentered)}
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    If $n+1$ nodes $x_0, \ldots, x_n$ and the values $f(x_i), f'(x_i)$ $(i=0, \ldots, n)$ are given, we define a sequence [TODO]
+\end{proof}
+
+
+\section{Spline interpolation}\label{sec:spline-interpolation}
+Although an interpolating polynomial can always be found, this is often not a very good approximation, especially in the case of large n.
+Fluctuation in a small region can lead to great changes throughout the entire interval.
+Piecewise interpolation can be preferable.
+
+The simplest version of piecewise interpolation would employ polynomials of degree 1.
+This has the big disadvantage that the resulting curve is not smooth/differentiable.
+Better choice: Piecewise hermite interpolation with polynomials of degree 3.
+A cubic spline interpolating function is a function $s$ with the properties
+\begin{itemize}
+    \item $s$ is a cubic polynomial labeled $s_j$ on the subinterval $[x_j, x_{j+1}]$
+    \item $s_j(x_j) = f(x_j)$ for $j = 0, \ldots, n$
+    \item $s_{j+1}(x_{j+1}) =s_j(x_{j+1})$
+    \item $s_{j+1}'(x_{j+1}) =s_j'(x_{j+1})$
+    \item $s_{j+1}''(x_{j+1}) =s_j''(x_{j+1})$
+    \item one of the following boundary conditions
+    \begin{itemize}
+        \item $s''(x_0)=s''(x_n) = 0$ (free boundary)
+        \item $s'(x_0) = f'(x_0)$ and $s'(x_n) = f'(x_n)$ (hermite boundary)
+    \end{itemize}
+\end{itemize}
+
+
+\chapter{Trigonometric interpolation}\label{ch:trigonometric-interpolation}
+We consider the n-dimensional space $T_c^{n-1}$ of complex trigonometric polynomials
+\begin{align*}
+    \Phi_n(x) = \sum_{k=0}^{N-1} c_k * e^{ikx} \text{ with } c_k \in \mathbb{C}
+\end{align*}
+of degree $N-1$.
+These polynomials are periodic: $\Phi_n(x)=\Phi_n(2 \pi + x)$.
+The linear independence of the basis functions $e^{ikx}$ guarantees that for $N$ data-points $(x_j, f_j)$ with $j= 0, \ldots, N-1$ there is exactly
+one interpolating polynomial $\Phi_n$ with $\Phi_n(x_j)=f_j$.
+If we constrain ourself to equidistant nodes $x_j = \frac{2  \pi j}{N}$ then we obtain the Vandermond-System.
+\begin{equation*}
+    \begin{pmatrix}
+        1      & w_0     & w_0^2     & \dots  & w_0^n         \\
+        \vdots & \vdots  & \vdots    & \ddots & \vdots        \\
+        1      & x_{n-1} & w_{n-1}^2 & \dots  & w_{n-1}^{n-1}
+    \end{pmatrix}
+    *
+    \begin{pmatrix*}
+        c_0\\
+        \vdots \\
+        c_{n-1}
+    \end{pmatrix*}
+    =
+    \begin{pmatrix*}
+        f_0\\
+        \vdots\\
+        f_{n-1}
+    \end{pmatrix*}
+\end{equation*}
+where $w_k$ are the roots of unity of degree $N$.
+\begin{align*}
+    w_k \coloneq e^{ikx} &= e^{i*2 \pi k / N}\\
+    (w_k)^N &= 1
+\end{align*}
+\begin{lemma}
+    The basis functions $e^{ikx}$ are orthogonal with respect to the inner product
+    \begin{equation*}
+        \langle f, g \rangle \coloneq \frac{1}{n} * \sum_{j=0}^{N-1} f(x_j) * \overline{g(x_j)}
+    \end{equation*}
+    with the nodes $x_j = \sfrac{2\pi j}{N}$
+\end{lemma}
+\begin{proof}
+    \begin{align*}
+    (w_k)
+        ^l &= (w_l)^k = w_1^{k*l}\\
+        \left( e^{i*2 \pi k / N} \right)^l &= \left( e^{i*2 \pi l / N} \right)^k = e^{i*2 \pi kl / N}\\
+        \langle e^{ikx}, e^{ilx} \rangle &= \frac{1}{N} * \sum_{j=0}^{N-1} e^{i*2 \pi k j / N} * e^{-i*2 \pi l j / N}\\
+        &= \frac{1}{n} \sum_{j=0}^{N-1} \underbrace{w_j^m w_j^{-l}}_{w_j^{k-l}} = N * d_{kl} \text{ is equivalent to}\\
+        \sum_{j=0}^{N-1}w_j^k &= \sum_{j=0}^{N-1} w_k^{j} = N * \delta_{k0}
+    \end{align*}
+    Roots of unity $w_k$ are solutions of $0 = w^n-1 = (w-1)(w^{n-1}+w^{n-2}+\ldots+1) = (w-1) \sum_{j=0}^{N-1} w_k^j$
+    If $k \neq 0$ then $w_k \neq 1$ and therefore $\sum_{j=0}^{N-1} w_k^j = 0$.
+    If $k=0$ then $\sum_{j=0}^{N-1} w_k^j = N$.
+    The coefficients $c_n$ of the trigonometric interpolation of the $N$ data points $(x_l, f_l)$ with equidistant nodes $x_l = \frac{2 \pi l}{N}$ are given by
+    \begin{align*}
+        c_k &= \sum_{l=0}^{N-1} f_l * w_l^{-k} \text{ for } k = 0, \ldots, N-1\\
+        &= \langle f, e^{ikx} \rangle
+    \end{align*}
+
+    Proof by insertion:
+    \begin{align*}
+        \Phi(x_m)=\sum_{k=0}^{N-1} c_k *w_m^k &= \sum_{k=0}^{N-1} \frac{1}{N} \sum_{l=0}^{N-1} f_l * w_l^{-k} w_m^k\\
+        &= \frac{1}{N} \sum_{l=0}^{N-1} f_l \sum_{k=0}^{N-1} \underbrace{w_l^{-k}*w_m^k}_{w_k^{m-l}}\\
+        &= \frac{1}{N} \sum_{l=0}^{N-1} f_l * N * \delta_{ml} = f_m
+    \end{align*}
+\end{proof}
+\begin{remark}
+    If the polynomial is real
+    \begin{equation*}
+        \phi_N(x) = \sum_{k=0}^{N-1}c_{k}*e^{ikx} \in \mathbb{R} \text{ for all } x \in \mathbb{R}
+    \end{equation*}
+    one can use the representation
+    \begin{equation*}
+        \Phi_{2n+1}(x) = \frac{a_0}{2}+\sum_{k=1}^{n} a_k * \cos(kx) + b_k * \sin(kx) \text{ with } n = \frac{N-1}{2}
+    \end{equation*}
+\end{remark}
+

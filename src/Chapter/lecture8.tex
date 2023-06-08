@@ -1,0 +1,88 @@
+\chapter{least-square approximation}\label{ch:least-square-approximation}
+We have seen that any set of points $(x_i, y_i)$ $i = 1, \ldots, n$ with pairwise distinct $x_i$ can be interpolated by polynomial of degree $\leq n-1$.
+However, in most cases, the underlying mathematical or physical relationship does not justify the use of a high-order polynomial.
+It is also not imperative to match each point exactly since the data usually carry errors.
+Instead, it is desirable to find a simple function(e.g.\ a polynomial) of low order and allow for small discrepancy with the data.
+
+Different definitions of ``discrepancy'' are conceivable.
+\begin{equation*}
+    E_{\infty} = \max_{i=1,\ldots,n} \{ |f(x_i) - y_i| \}
+\end{equation*}
+Determining f such that $E_\infty$ is minimal will provide a function f which has the smallest possible maximal deviation from the data.
+\begin{equation*}
+    E_1 = \sum_{i=1}^n |f(x_i) - y_i|
+\end{equation*}
+Minimalizing $E_i$ leads to an $f$ where the sum of all absolute deviations from the data is minimal.
+\begin{equation*}
+    E_2 = \sqrt{\sum_{i=1}^n |f(x_i) - y_i|^2}
+\end{equation*}
+Minimizing $E_2$ (i.e.\ minimizing $E_2^2$) will produce a function $f$ with the least squared deviation from the data.
+\begin{equation*}
+    E_p = \left( \sum_{i=1}^n |f(x_i) - y_i|^p \right)^{\frac{1}{p}}
+\end{equation*}
+Each approach has its applications.
+In most cases $E_2$ is used.
+This is based on the assumption that measurements are distributed around the true value according to Gaussian distribution.
+Assume that we have measured a data-vector $\{ y_i \}$ and try to find a model m represented by a function $f_m$ (e.g., a polynomial of degree 1).
+We try to maximize $"W(m \vert \{ y\})$, i.e.\ the likelihood for for $m$ under the condition that $\{ y \}$ has been measured.
+\begin{align*}
+    \text{Bayes-theorem: } W(m \vert \{ y \}) &= \frac{W(\{ y \} \vert m) * W(m)}{W(\{ y \})} \\
+\end{align*}
+\begin{itemize}
+    \item $W(\{ y\})$ is a constant (independent of m)
+    \item $W(m)$ is the probability that we would choose a model $m$ if we had no data at all.
+    Usually one does not discriminate different models a priory (beyond selecting a class of functions).
+    $W(m)$ is therefore a constant.
+    \item $W(\{y \} \vert m)$ is the probability that a given mode produces the data $\{ y \}$.
+\end{itemize}
+\begin{align*}
+    W(\{ y \} \vert m) &= \prod_{i=1}^n \frac{1}{\sqrt{2 \pi \sigma^2}} \exp \left( - \frac{(y_i - f_m(x_i))^2}{2 \sigma^2} \right) \\
+    &= \frac{1}{(2 \pi \sigma^2)^{\frac{n}{2}}} \exp \left( - \frac{1}{2 \sigma^2} \sum_{i=1}^n (y_i - f_m(x_i))^2 \right) \\
+    &= \frac{1}{(2 \pi \sigma^2)^{\frac{n}{2}}} \exp \left( - \frac{1}{2 \sigma^2} E_2^2 \right) \\
+\end{align*}
+$ \to{} W(\{y\} | m)$ is maximal if $E_2$ is minimal.
+If $W(\{y\} | m)$ is maximal usually $W(m | \{y\})$ is maximal as well.
+$E_2^2 / \sigma^2$ is often denoted as $\chi^2$ ``chi-squared''.
+
+\begin{remark}
+    If $y_i$ carries a known error $\sigma_i$
+    \begin{align*}
+        W(\{y\} | m) &= \prod_{i=1}^n \frac{1}{\sqrt{2 \pi \sigma_i^2}} \exp \left( - \frac{(y_i - f_m(x_i))^2}{2 \sigma_i^2} \right)\\
+        &= \prod_{i=1}^n \left( \frac{1}{\sqrt{2 \pi \sigma_i^2}} \right) \exp \left( - \underbrace{\sum_{i=1}^{n} \frac{(y_i - f_m(x_i))^2}{2 \sigma_i^2 \right)}}_{\chi^2 } \right) \\
+    \end{align*}
+\end{remark}
+\begin{example}
+    Simple case: $f(x) = ax + b$
+    \begin{equation*}
+        E_2^2 = \sum_{i=1}^{n}[y_1 - (ax_i + b)]^2
+    \end{equation*}
+    $E_2^2$ is minimal if
+    \begin{align*}
+        \frac{\partial E_2^2}{\partial a} &= \frac{\partial E_2^2}{\partial b} = 0\\
+        0 = \frac{\partial }{\partial a} \sum_{i=1}^n [y_i - (ax_i + b)]^2 &= \sum_{i=1}^n -2x_i[y_i - (ax_i + b)] \\
+        (i) \phantom{=} a \sum_{i=1}^n x_i y_i + b \sum_{i=1}^n x_i &= \sum_{i=1}^n x_i^2 y_i \\
+        0 = \frac{\partial }{\partial b} \sum_{i=1}^{n} [y_i - (ax_i + b)]^2 &= \sum_{i=1}^n -2[y_i - (ax_i + b)] \\
+        (ii) \phantom{=} a \sum_{i=1}^n x_i + b \sum_{i=1}^n 1 &= \sum_{i=1}^n y_i \\
+    \end{align*}
+
+    We can a define a Matrix to solve the problem:
+    \begin{equation*}
+        \begin{pmatrix}
+            \sum_{i=1}^n x_i^2 & \sum_{i=1}^n x_i \\
+            \sum_{i=1}^n x_i   & n   \\
+        \end{pmatrix}
+        *
+        \begin{pmatrix}
+            a \\
+            b \\
+        \end{pmatrix}
+        = 
+        \begin{pmatrix}
+            \sum_{i=1}^n x_i y_i \\
+            \sum_{i=1}^n y_i \\
+        \end{pmatrix}
+    \end{equation*}
+\end{example}
+
+
+

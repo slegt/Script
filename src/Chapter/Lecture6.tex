@@ -183,37 +183,4 @@ Every node $x_i \in \{ x_0, \ldots, x_n \}$ corresponds to $2$ conditions which 
         \widehat{\HO}_{n,j}'(x_i) |_{i \neq j} &= 0
     \end{align*}
 \end{theorem}
-In summary we obtain
-\begin{align*}
-    \HO_{2n+1}(x) = \sum_{j=0}^{n} f(x_j)*\HO_{n,j}(x)+ \sum_{j=0}^{n} f'(x_j) \widehat{\HO}_{n,j}(x)
-\end{align*}
-\begin{center}
-    \begin{tabular}{c c}
-        \[ \HO_{n,j}(x_i) = \delta_{ij}\] & \[\HO_{n,j}'(x_i) = 0\]\\
-        \[ \widehat{\HO}_{n,j}(x_i) = 0\] & \[ \widehat{\HO}_{n,j}'(x_i) = \delta_{ij}\]
-    \end{tabular}
-\end{center}
-However, the construction by means of Lagrange polynomials is computationally expensive.
-Again, divided differences are useful.
-From the remainder of polynomial interpolation it follows:
-\begin{lemma}
-    Let $f \in C^n([a,b])$ and $X_0, \ldots, x_n$ be pairwise distinct in $[a,b]$.
-    Then there is a $\xi \in [a,b]$ such that
-    \begin{equation*}
-        f[x_0,\ldots, x_n] = \frac{f^{(n)}(x)}{n!} \text{ (\textasteriskcentered)}
-    \end{equation*}
-\end{lemma}
-\begin{proof}
-    If $n+1$ nodes $x_0, \ldots, x_n$ and the values $f(x_i), f'(x_i)$ $(i=0, \ldots, n)$ are given, we define a sequence [TODO]
-\end{proof}
-
-\section{Spline interpolation}\label{sec:spline-interpolation}
-Although an interpolating polynomial can always be found, this is often not a very good approximation, especially in the case of large n.
-Fluctuation in a small region can lead to great changes throughout the entire interval.
-Piecewise interpolation can be preferable.
-
-The simplest version of piecewise interpolation would employ polynomials of degree 1.
-This has the big disadvantage that the resulting curve is not smooth/differentiable.
-Better choice: Piecewise hermite interpolation with polynomials of degree 3.
-A cubic spline interpolating function is a function s with the properties
 
