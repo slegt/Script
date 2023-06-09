@@ -60,7 +60,7 @@ If we constrain ourself to equidistant nodes $x_j = \frac{2  \pi j}{N}$ then we 
     \begin{pmatrix}
         1      & w_0     & w_0^2     & \dots  & w_0^n         \\
         \vdots & \vdots  & \vdots    & \ddots & \vdots        \\
-        1      & x_{n-1} & w_{n-1}^2 & \dots  & w_{n-1}^{n-1}
+        1      & w_{n-1} & w_{n-1}^2 & \dots  & w_{n-1}^{n-1}
     \end{pmatrix}
     *
     \begin{pmatrix*}
@@ -85,13 +85,14 @@ where $w_k$ are the roots of unity of degree $N$.
     \begin{equation*}
         \langle f, g \rangle \coloneq \frac{1}{n} * \sum_{j=0}^{N-1} f(x_j) * \overline{g(x_j)}
     \end{equation*}
-    with the nodes $x_j = \sfrac{2\pi j}{N}$
+    with the nodes $x_j = {2\pi j}/{N}$
 \end{lemma}
 \begin{proof}
     \begin{align*}
     (w_k)
         ^l &= (w_l)^k = w_1^{k*l}\\
         \left( e^{i*2 \pi k / N} \right)^l &= \left( e^{i*2 \pi l / N} \right)^k = e^{i*2 \pi kl / N}\\
+        \\
         \langle e^{ikx}, e^{ilx} \rangle &= \frac{1}{N} * \sum_{j=0}^{N-1} e^{i*2 \pi k j / N} * e^{-i*2 \pi l j / N}\\
         &= \frac{1}{n} \sum_{j=0}^{N-1} \underbrace{w_j^m w_j^{-l}}_{w_j^{k-l}} = N * d_{kl} \text{ is equivalent to}\\
         \sum_{j=0}^{N-1}w_j^k &= \sum_{j=0}^{N-1} w_k^{j} = N * \delta_{k0}
@@ -118,8 +119,14 @@ where $w_k$ are the roots of unity of degree $N$.
         \phi_N(x) = \sum_{k=0}^{N-1}c_{k}*e^{ikx} \in \mathbb{R} \text{ for all } x \in \mathbb{R}
     \end{equation*}
     one can use the representation
-    \begin{equation*}
-        \Phi_{2n+1}(x) = \frac{a_0}{2}+\sum_{k=1}^{n} a_k * \cos(kx) + b_k * \sin(kx) \text{ with } n = \frac{N-1}{2}
-    \end{equation*}
+    \begin{align*}
+        \text{for odd N: }\Phi_{2n+1}(x) &= \frac{a_0}{2}+\sum_{k=1}^{n} a_k * \cos(kx) + b_k * \sin(kx) \text{ with } n = \frac{N-1}{2}\\
+        \text{for even N: } \Phi_{2n}(x) &= \frac{a_0}{2}+\sum_{k=1}^{n-1} a_k * \cos(kx) + b_k * \sin(kx) + \frac{a_n}{2} * \cos(nx) \text{ with } n = \frac{N}{2}
+    \end{align*}
+    with $a_k, b_k \in \mathbb{R}$.
+    It is $a_k = c_k + c_{N-k}$ and $b_k = i *(c_k-c_{N-k})$
+\end{remark}
+\begin{remark}
+    With $c_{-j} = c_{N-j}$ we can write for odd N
 \end{remark}
 
