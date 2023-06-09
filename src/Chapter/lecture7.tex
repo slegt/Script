@@ -19,9 +19,30 @@ From the remainder of polynomial interpolation it follows:
     \end{equation*}
 \end{lemma}
 \begin{proof}
-    If $n+1$ nodes $x_0, \ldots, x_n$ and the values $f(x_i), f'(x_i)$ $(i=0, \ldots, n)$ are given, we define a sequence [TODO]
+    If $n+1$ nodes $x_0, \ldots, x_n$ and the values $f(x_i), f'(x_i)$ $(i=0, \ldots, n)$ are given, we define a sequence
+    \begin{equation*}
+        \hat{x}_{2i} = \hat{x}_{2i+1} = x_i
+    \end{equation*}
+    We generate divided differences with sequence.
+    Obviously
+    \begin{equation*}
+        f[\hat{x_}{2i}, \hat{x}_{2i+1}]
+        = \frac{f[\hat{x}_{2i+1}]-f[\hat{x}_{2i}]}{\hat{x}_{2i+1}-\hat{x}_{2i}}
+    \end{equation*}
+    can not be used.
+    But considering $(\textasteriskcentered)$ and
+    \begin{equation*}
+        \lim_{x_A \to x_0} f[x_0, x_A] = f'(x_0)
+    \end{equation*}
+    it is justified to use the substitution
+    \begin{equation*}
+        f[\hat{x}_{2i}, \hat{x}_{2i+1}] = f'(x_i)
+    \end{equation*}
+    and use $f'(x_0), f'(x_1), f'(x_2), \ldots, f'(x_n)$ for
+    $f[\widehat{x_0}, \widehat{x_1}], f[\widehat{x_2}, \widehat{x_3}] f[\widehat{x_4}, \widehat{x_5}],
+    \ldots, f[\widehat{2n}, \widehat{x_{2n+1}}]$
+    The remaining divided differences are generated as before.
 \end{proof}
-
 
 \section{Spline interpolation}\label{sec:spline-interpolation}
 Although an interpolating polynomial can always be found, this is often not a very good approximation, especially in the case of large n.
@@ -55,7 +76,7 @@ of degree $N-1$.
 These polynomials are periodic: $\Phi_n(x)=\Phi_n(2 \pi + x)$.
 The linear independence of the basis functions $e^{ikx}$ guarantees that for $N$ data-points $(x_j, f_j)$ with $j= 0, \ldots, N-1$ there is exactly
 one interpolating polynomial $\Phi_n$ with $\Phi_n(x_j)=f_j$.
-If we constrain ourself to equidistant nodes $x_j = \frac{2  \pi j}{N}$ then we obtain the Vandermond-System.
+If we constrain ourselves to equidistant nodes $x_j = \frac{2  \pi j}{N}$ then we obtain the Vandermond-System.
 \begin{equation*}
     \begin{pmatrix}
         1      & w_0     & w_0^2     & \dots  & w_0^n         \\
@@ -128,5 +149,35 @@ where $w_k$ are the roots of unity of degree $N$.
 \end{remark}
 \begin{remark}
     With $c_{-j} = c_{N-j}$ we can write for odd N
+    \begin{align*}
+        \Phi_n(x_l) = \sum_{k=0}^{N-1} c_k e^{ikx_l} = \sum_{k = -n}^{n} c_k *e^{ikx_l}  
+        \text{ with } n = \frac{N-1}{2}\\
+        e^{-ikx_l} = e^{-ik \frac{2 \pi l}{n}} = e^{-i k \frac{2 \pi l}{N}} * \underbrace{e^{i 2 \pi l}}_{=1^l}
+        = e^{i (N-k) \frac{2 \pi l}{N}}
+    \end{align*}
+    Strong similarity to truncated Fourier series:
+    \begin{equation*}
+        f_n(x) = \sum_{k = -n}^{n} \widehat{f_k} * e^{ikx}
+    \end{equation*}
+    with coefficients
+    \begin{equation*}
+        \widehat{f_k} = \frac{1}{2 \pi } \integral{0}{2 \pi}{f(x) * e^{-ikx}}
+    \end{equation*}
+    If the integral is approximated as a sum of the x values $x_l = \frac{2 \pi l}{N}$ one
+    obtains an approximation of $\widehat{f_k}$
+    \begin{align*}
+        \integral{0}{2 \pi}{g(x)} \approx \frac{2 \pi }{N} \sum_{k = 0}^{N-1}g(x_k)\\
+        \widehat{f_k} \approx \frac{1}{N} \sum_{l = 0}^{N-1} f_l e^{-ikx_l} = \frac{1}{N}
+        \sum_{l=0}^{N-1} e^{-ikl \frac{2 \pi}{N}} f_l = c_l
+    \end{align*}
+    Therefore the isomorphism
+    \begin{equation*}
+        \widetilde{f_n}: \mathbb{C} \to \mathbb{C}: (f_j) \to (\c_j)
+    \end{equation*}
+    is also called discrete Fourier-Transformation.
+    \begin{align*}
+        c_k = \frac{1}{N} \sum_{l=0}^{N-1} f_l e^{-i 2 \pi k l / N}\\
+        f_k = \sum_{l=0}^{N-1} c_l e^{i 2 \pi k l / N}
+    \end{align*}
 \end{remark}
 

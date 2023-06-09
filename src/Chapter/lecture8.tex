@@ -1,3 +1,39 @@
+\section{Fast Fourier Transformation}\label{sec:fast-fourier-transformation}
+The calculation of the coefficients $c_k$ from the function values
+$f_k$ (or inverse operation) is a matrix-vector iultiplication, and therefore,
+they require $ \propto N^2$ operations.
+There is an algorithm that only needs $\propto N \log N$ operations.
+If $N$ is even $M = N/2$ and $w = \exp\left(\frac{-i 2 \pi }{N}\right)$ then the trigonometric
+sums
+\begin{align*}
+    \alpha_k = \sum_{l=0}^{N-1} f_l w^{kl} \text{for } k = 0, \ldots, N-1
+\end{align*}
+can be written as
+\begin{align*}
+    \xi&: w^2, m = 0, \ldots, M-1\\
+    \alpha_{2m} &= \sum_{l=0}^{M-1} g_l * \xi ^{ml} \text{with } g_l = f_l + f_{l+m}\\
+    \alpha_{2m+1} &= \sum_{l=0}^{M-1} h_l * \xi^{ml} \text{with } h_l = (f_l - f_{l+m}) * w^l
+\end{align*}
+\begin{proof}
+    \begin{align*}
+        \alpha_{2m} &= \sum_{l=0}^{N-1} f_l w^{2ml}\\
+        &= \sum_{l=0}^{N/2-1}f_l * w^{2ml} + f_{l + N/2} w^{2(l+N/2)m}\\
+        &= \sum_{l=0}^{N/2-1}(f_l + f_{l+N/2}) * (w^2)^{lm}\\
+        \alpha_{2m+1} &= \sum_{l=0}^{N-1} f_l w^l/(2m+1)\\
+        &= \sum_{l=0}^{N/2-1} f_{l} * w^{l/(2m+1)}+ f_{l + N/2} * w^{l + N/2}\\
+        &= \sum_{l=0}^{M-1} (f_l- f_{l+M}) w^l * (w^2)^{lm}
+    \end{align*}
+\end{proof}
+If the initial number of points/terms of the sums $N$ is a power of two, the process can be repeated,
+until there is only one term left.
+
+This can be done on a single vector by overwriting the old values because the number of terms
+stays constant $\{ f_0, f_1, \ldots, f_{n-1} \} \to \{ g_0, \ldots, g_{N/2-1}, h_0, \ldots, h_{N/2}-1$
+and two f-values always form one g and one h value.
+TODO[Scheme]
+For every reduction $\propto $ N Operations are needed and there are $ N \log_{2} N$ \textrightarrow
+$N * \log_2 N$ total operations.
+
 \chapter{least-square approximation}\label{ch:least-square-approximation}
 We have seen that any set of points $(x_i, y_i)$ $i = 1, \ldots, n$ with pairwise distinct $x_i$ can be interpolated by polynomial of degree $\leq n-1$.
 However, in most cases, the underlying mathematical or physical relationship does not justify the use of a high-order polynomial.
@@ -69,17 +105,17 @@ $E_2^2 / \sigma^2$ is often denoted as $\chi^2$ ``chi-squared''.
     \begin{equation*}
         \begin{pmatrix}
             \sum_{i=1}^n x_i^2 & \sum_{i=1}^n x_i \\
-            \sum_{i=1}^n x_i   & n   \\
+            \sum_{i=1}^n x_i   & n                \\
         \end{pmatrix}
         *
         \begin{pmatrix}
             a \\
             b \\
         \end{pmatrix}
-        = 
+        =
         \begin{pmatrix}
             \sum_{i=1}^n x_i y_i \\
-            \sum_{i=1}^n y_i \\
+            \sum_{i=1}^n y_i     \\
         \end{pmatrix}
     \end{equation*}
 \end{example}

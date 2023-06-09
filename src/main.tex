@@ -19,6 +19,7 @@
 \mathcode`\*="8000{\catcode`\*\active\gdef*{\cdot}}
 \DeclareMathOperator{\HO}{\mathcal{H}}
 \DeclareMathOperator{\GO}{\mathcal{G}}
+\newcommand{\integral}[3]{\int_{#1}^{#2} #3 dx}
 
 \theoremstyle{definition}
 \newtheorem*{definition}{Definition}
@@ -38,7 +39,7 @@
 
     \maketitle
     \tableofcontents
-
+    \integral{a}{b}{1}
 
     \include{Chapter/1numberSystems}
     \include{Chapter/2representationOfNumbers}
