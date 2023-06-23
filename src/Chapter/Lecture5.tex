@@ -31,14 +31,15 @@ Often instead of a function f only individual values $f(x_i)$ and
 perhaps values of the derivatives $f'(x_i), f''(x_i)$ are available.
 This is for instance the case if differential equations are being solved
 numerically or with experimental data.
-However, for experimental data, one typically uses fitting and not interpolation)
+However, for experimental data, one typically uses fitting and not interpolation.
 If one wants to obtain function values at intermediate position, integrate or
 simply get a smooth representation, one has to interpolate.
 That means one searches for a function $\varphi$ that agrees with $f$, $f'(x), \ldots$
 at the nodes $x_i$:
 \begin{align*}
     f(x_i)=\varphi(x_i)\\
-    f'(x_i)=\varphi'(x_i)
+    f'(x_i)=\varphi'(x_i)\\
+    \ldots
 \end{align*}
 
 
@@ -57,6 +58,7 @@ $x_0, x_1, \ldots x_n$.
 But non-zero polynomials of degree $n$ have at most
 exactly $n$ roots.
 Hence, $P(x)-Q(x) = 0$
+
 There are different methods for finding $P$, which can be associated with different
 bases of the space of polynomials.
 
@@ -136,7 +138,7 @@ The interpolating polynomial $P$ is obtained by superposition
     \end{align*}
 \end{example}
 
-\subsection{Recursive determination of the interpolating polynomial / Neville's method}\label{subsec:recursive-determination-of-the-interpolating-polynomial-/-neville's-method}
+\subsection{Neville's method}\label{subsec:neville's-method}
 Let $P_{m_0, m_1, \dots, m_k} (x)$ be the polynomial of degree $k$ that interpolates $f(x)$\\
 at the nodes $x_{m_0}, x_{m_1},\ldots,x_{m_k}$
 \begin{equation*}
@@ -145,7 +147,7 @@ at the nodes $x_{m_0}, x_{m_1},\ldots,x_{m_k}$
 is the polynomial of degree n that interpolates f at the nodes $x_0, \ldots, x_n$ (proof by plugging in).
 
 Involves a lot of operations but is efficient if one is only interested in the value of the interpolating polynomial at one specific position $\hat{x}$.
-Then $P_{1,2}(\hat{x})$, $P_{0,1,\ldots, n-1}(\hat{x})$, \ldots are just numbers.
+Then $P_{1,2}(\hat{x})$, $P_{0,1,\ldots, n-1}(\hat{x})$, \ldots{} are just numbers.
 
 \subsection{Newton's method}\label{subsec:newton's-method}
 Newton basis: $N_0 (x) = 1$, $N_1(x) =(x-x_0)$, $N_2(x)=(x-x_0)(x-x_1)$, \ldots
@@ -158,8 +160,8 @@ The problem becomes what is $c_i$?
 effective determination through divided differences($f[\ldots]$). Polynomial of degree 0:
 \begin{align*}
     P_i(x) &= f[x_i] \coloneqq f_i = f(x_i)\\
-    P_{i, i+1} &= \frac{(x_i - x) P_{i+1}-(x_{i+1} P_i(x))}{x_i-x_{i+1}} =f[x_i]+(x-x_i)\underbrace{f[x_i, x_i+1]}_{=c}\\
-    &=\frac{(x_i-x)f[x_{i+1}]-(x_{i+1}-x) f[x_i]}{x_i-x_i+1}\\
+    P_{i, i+1} &= \frac{(x_i - x) P_{i+1}-(x_{i+1} P_i(x))}{x_i-x_{i+1}} =f[x_i]+(x-x_i)\underbrace{f[x_i, x_{i+1}]}_{=c}\\
+    &=\frac{(x_i-x)f[x_{i+1}]-(x_{i+1}-x) f[x_i]}{x_i-x_{i+1}}\\
     f[x_i, x_{i+1}] &= \frac{(x_i-x)f[x_{i+1}]-(x_{i+1}-x) f[x_i]-(x_i-x_{i+1}) f[x_i]}{(x_i-x_{i+1})(x-x_i)}\\
     &= \frac{(x_i-x)f[x_{i+1}]-(x_i-x)f[x_i]}{(x_i-x_{i+1})(x-x_i)}=\frac{f[x_i]-f[x_{i+1}]}{x_i-x_{i+1}}
 \end{align*}
@@ -173,5 +175,5 @@ Let the ($n-1$)th divided difference $f[x_0, \ldots, x_{n-1}]$ and $f[x_i, \ldot
     &\phantom{=}+f[x_1, x_2, \ldots, x_n] (x-x_1)(x-x_2)\ldots (x-x_{n-1})\\
     P_{0,1,\ldots, n}(x) &= \frac{(x_0-x)P_{1,\ldots, n}(x)-(x_n-x)P_{0,\ldots, n-1}}{x_0-x_n} \text{(\textasteriskcentered{}\textasteriskcentered{})}\\
     &\text{compare coefficients of $x^n$ in (\textasteriskcentered{}) and (\textasteriskcentered{}\textasteriskcentered{})}\\
-    f[x_0,\ldots, x_n]&=\frac{f[x_0, \ldots, x_n-1]-f[x_1, \ldots, x_n]}{x_0-x_1}
+    f[x_0,\ldots, x_n]&=\frac{f[x_0, \ldots, x_{n-1}]-f[x_1, \ldots, x_n]}{x_0-x_1}
 \end{align*}

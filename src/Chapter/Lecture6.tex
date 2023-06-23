@@ -5,10 +5,10 @@ of degree $\leq n$ which is given by
     &\phantom{=}\ldots + f[x_0, x_1, \ldots, x_n] (x-x_0)(x-x_1)\ldots (x-x_{n-1})\\
 \end{align*}
 where the divided differences are given by
-\begin{equation*}
-    f[x_i] = f(x_i)
-    f[x_i, \ldots, x_{i+k}] = \frac{f[x_i, \ldots, x_{i+k-1}]-f[x_{i+1}, \ldots, x_{ik}]}{x_i - x_{i+k}}
-\end{equation*}
+\begin{align*}
+    f[x_i] = f(x_i)\\
+    f[x_i, \ldots, x_{i+k}] = \frac{f[x_i, \ldots, x_{i+k-1}]-f[x_{i+1}, \ldots, x_{i+k}]}{x_i - x_{i+k}}
+\end{align*}
 Now we calculate the interpolating polynomials in the newton base, for previous example
 
 
@@ -44,7 +44,6 @@ Now we calculate the interpolating polynomials in the newton base, for previous 
     P(x)= 0.5-0.2(x-2)+0.05(x-2)(x-2.5)
 \end{equation*}
 
-
 \section{Error of polynomial interpolation}\label{sec:error-of-polynomial-interpolation}
 
 \begin{theorem}
@@ -52,18 +51,18 @@ Now we calculate the interpolating polynomials in the newton base, for previous 
     $x_0, \ldots, x_n \in [a,b]$ of degree $\leq n$.
     Then for every $x \in [a,b]$ there is a $\xi = \xi(x) \in [a,b]$ such that
     \begin{equation*}
-        f(x)-P(x) = \underbrace{(x-x_0)(x-x_1)\ldots(x-x_n)}_{\coloneq W_{n+1}(x)}\frac{f^{n+1}(\xi)}{(n+1)!}
+        f(x)-P(x) = \underbrace{(x-x_0)(x-x_1)\ldots(x-x_n)}_{\coloneqq W_{n+1}(x)}\frac{f^{n+1}(\xi)}{(n+1)!}
     \end{equation*}
 \end{theorem}
 \begin{proof}
-    Let $F(x) \coloneq f(x)-p(x)-k*W_{n+1}(x)$ and select some $\hat{x}\in [a,b], \hat{x} \neq x_i$.
+    Let $F(x) \coloneqq f(x)-p(x)-k*W_{n+1}(x)$ and select some $\hat{x}\in [a,b], \hat{x} \neq x_i$.
     We choose K such that $F(\hat{x})=0$.
     This is always possible since $W_{n+1}(x) \neq 0$. $F(x)$ has therefore $n+2$ roots.
     This means that $F'(x)$ has $n+1$ roots, $F''(x)$ has n roots etc., until $F^{n+1}(x)= f^{n+1}(x)-k(n+1)!$ has one root,
     which we call $\xi = \xi(\hat{x})$
     \begin{align*}
         0 &= f^{n+1}(\xi)-k*(n+1)! \\
-        K &= \frac{f^{n+1}(\xi)}{(n+1)!}
+        k &= \frac{f^{n+1}(\xi)}{(n+1)!}
     \end{align*}
 \end{proof}
 \begin{remark}
@@ -84,15 +83,15 @@ If  $[a,b] \neq [-1,1]$ then the transformation
 with the inverse transformation
 \begin{align*}
 [a,b]
-    \to [-1,1]\\
-    y \to \frac{2y}{b-a}- \frac{a+b}{b-a}=x
+    &\to [-1,1]\\
+    y &\to \frac{2y}{b-a}- \frac{a+b}{b-a}=x
 \end{align*}
 does not change the properties of the interpolation and approximation.
 The Chebyshev polynomials are recursively defined by
 \begin{align*}
     T_0(x) &= 1\\
     T_1(x) &= x\\
-    T_n+1 &= 2x*T_n(x)-T_{n-1}(x)
+    T_{n+1} &= 2x*T_n(x)-T_{n-1}(x)
 \end{align*}
 This implies $T_n (x)= \cos(n*\arccos(x))$
 \begin{proof}
@@ -122,7 +121,7 @@ Properties of $T_n$:
     \begin{align*}
         x_i &= \cos\left(\frac{2i+1}{2n+2} \pi\right), i=0,\ldots,n\\
         \text{Then } w_{n+1}(x) &= \frac{1}{2^n}* T_{n+1}(x) \\
-        \text{and } \max_{x \in [-1,1]} \lvert x_{n+1}(x) \rvert &= \frac{1}{2^n}
+        \text{and } \max_{x \in [-1,1]} \lvert w_{n+1}(x) \rvert &= \frac{1}{2^n}
     \end{align*}
 \end{theorem}
 
@@ -144,7 +143,7 @@ Properties of $T_n$:
         \end{align*}
         $T_n(x)-q_(x)$ has at least one root on $[\cos\frac{\pi}{n}, 1]$.
         In the same way, we can show that $T_n(x)-q(x)$ has at least one root on $[\cos\frac{2\pi}{n},\cos\frac{\pi}{n}]$
-        and on $[\cos\frac{3\pi}{n},\cos\frac{2\pi}{n}]$ and on \ldots and on $[-1, \cos \left( \frac{n-1  \pi}{n} \right)]$.
+        and on $[\cos\frac{3\pi}{n},\cos\frac{2\pi}{n}]$ and on \ldots{} and on $[-1, \cos \left( \frac{(n-1)  \pi}{n} \right)]$.
         Therefore $T_n(x)-q(x)$ has n roots in $[-1,1]$.
         If the root is situated on the boundary of two sub intervals, then it's a double root, since $T_n(x)$ and $q(x)$ extremal.
         However $T_n(x) - q(x)$ is only of degree $\leq n-1$
@@ -167,7 +166,7 @@ Every node $x_i \in \{ x_0, \ldots, x_n \}$ corresponds to $2$ conditions which 
     Then the only polynomial of degree $2n+1$ that equals $f$ and $f'$ in $x_0, \dlots, x_n$ is given by
     \begin{align*}
         \HO_{2n+1}(x) &= \sum_{j=0}^{n} f(x_j) * \HO_{n,j}(x) + \sum_{j=0}^{n} f'(x_j) * \widehat{\HO}_{n,j}(x)\\
-        \text{where } \HO_{n,j}(x) &= [1-2(x-x_j) * L'_{n,j}(x_j)]*L_{n,j}(x)\\
+        \text{where } \HO_{n,j}(x) &= [1-2(x-x_j) * L'_{n,j}(x_j)]*L_{n,j}(x)^2\\
         \text{and } \widehat{\HO}_{n,j}(x) &= (x-x_j)*L_{n,j}(x)^2
     \end{align*}
     Here $L_{n,j}(x)$ are the Lagrange polynomials.
@@ -175,7 +174,7 @@ Every node $x_i \in \{ x_0, \ldots, x_n \}$ corresponds to $2$ conditions which 
     and $\widehat{\HO}_{n,j}(x_i) = 0$ $\forall x_i$
 
     \begin{align*}
-        \HO_{n,j}'(x) &= 2 L'_{n,j}(x_j)*L_{n,j}(x)^2 + 2[1-2(x-x_j)L_{n,j}'(x_j)]*L_{n,j}'(x)*L_{n,j}(x)\\
+        \HO_{n,j}'(x) &= -2 L'_{n,j}(x_j)*L_{n,j}(x)^2 + 2[1-2(x-x_j)L_{n,j}'(x_j)]*L_{n,j}'(x)*L_{n,j}(x)\\
         \HO_{n,j}'(x_j) &= -2L_{n,j}'(x_j)+2L_{n,j}'(x_j) = 0\\
         H_{n,j}(x_i) |_{i \neq j} &= 0\\
         \\
